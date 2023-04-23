@@ -1,1 +1,13 @@
 ### Event Loop
+
+#### 1.How does the event loop manage requests in Node.js?
+
+##### ChatGPT Solution.
+
+The event loop in Node.js manages all the asynchronous operations by constantly checking for new events and executing their respective callbacks.
+
+When a request comes in, Node.js adds it to the event queue, and the event loop begins to process each event in the queue. The event loop checks if any of the events have a registered callback, and if so, it will execute the callback.
+
+If the callback is synchronous, it will be executed immediately. However, if the callback is asynchronous, the event loop delegates it to the appropriate worker threads or the thread pool, and registers a callback to be executed when the operation is complete.
+
+Once the operation is complete, the event loop retrieves the callback from the event queue and executes it. This cycle of adding events to the queue, executing their callbacks, and processing new events continues indefinitely as long as the Node.js process is running.

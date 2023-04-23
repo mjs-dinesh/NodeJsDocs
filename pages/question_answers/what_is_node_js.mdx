@@ -1,0 +1,21 @@
+### Node JS Architecture
+
+#### 1.What is Node architecture and what does it include?
+
+##### ChatGPT Solution.
+
+###### Node.js architecture refers to the internal design and structure of Node.js, which includes several key components.
+
+1. **V8 Engine**: Node.js uses the V8 engine to execute JavaScript code. The V8 engine is an open-source JavaScript engine developed by Google, which compiles and executes JavaScript code at a very high speed.
+
+2. **Libuv**: Node.js uses Libuv for handling I/O operations, such as file I/O, network I/O, and timers. Libuv is a multi-platform support library that provides asynchronous I/O capabilities.
+
+3. **Modules**: Node.js has a modular architecture, which allows developers to write and use modules to organize their code. Modules can be easily imported and exported using the `require()` and `module.exports` methods.
+
+4. **Event Loop**: Node.js follows an event-driven architecture, which includes an event loop. The event loop is responsible for handling asynchronous operations and executing callback functions when they are ready.
+
+5. **Global Object**: Node.js provides a global object that includes several built-in modules and functions, such as `console`, `process`, and `Buffer`.
+
+6. **Native Add-ons**: Node.js allows developers to write C/C++ add-ons to extend its functionality and performance.
+
+Overall, the architecture of Node.js is designed to be highly scalable and efficient, making it well-suited for building high-performance, real-time applications.
