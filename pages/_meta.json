@@ -1,5 +1,14 @@
 {
-  "index": "Node Js",
-  "question_answers": "Question and Answers",
-  "problem_solving": "Problem Solving"
+  "index": {
+    "title": "Home",
+    "type": "page"
+  },
+  "question_answers": {
+    "title": "Question and Answers",
+    "type": "page"
+  },
+  "problem_solving": {
+    "title": "Problem Solving",
+    "type": "page"
+  }
 }

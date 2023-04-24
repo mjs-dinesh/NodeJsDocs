@@ -1,12 +1,12 @@
-```
+```js
 const firstFn = () => {
-    let a = 'Im outer function variable'
-    function secoundFunction() {
-        return a
-    }
-    return secoundFunction
-}
+  let a = "Im outer function variable";
+  function secoundFunction() {
+    return a;
+  }
+  return secoundFunction;
+};
 
-const fn = firstFn()
-console.log(fn()) // Im outer function variable
+const fn = firstFn();
+console.log(fn()); // Im outer function variable
 ```

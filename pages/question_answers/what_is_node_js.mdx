@@ -33,13 +33,15 @@ Node.js uses the "Single Threaded Event Loop" architecture to handle multiple co
 ![Hello](https://www.simplilearn.com/ice9/free_resources_article_thumb/node-js-archi.JPG)
 
 Clients send requests to Web Server.
-Requests can be:
 
-Querying for data
-Deleting data
-Updating the data, etc.
+Requests can be: Querying for data, Deleting data, Updating the data, etc.
+
 Node.js adds the requests to the Event Queue
+
 Event Loop checks if the requests are simple enough not to require any external resources
+
 Event Loop processes simple requests and returns the responses to the corresponding clients
+
 A single thread from Thread Pool is assigned to a single complex request
+
 Thread Pool performs the required task and returns the response to Event Loop, which in turn, returns the response to the client

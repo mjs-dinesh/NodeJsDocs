@@ -1,1 +1,166 @@
 ### Problem Solving
+
+##### 1.How can you write the words "one Two Three" in the console when given the variable a = oneTwoThree in Node.js?
+
+To write the words "one Two Three" in the console when given the variable `a = oneTwoThree` in Node.js, you can split the string at the uppercase letters and then join the resulting array with space character as a separator. Here's an example code snippet:
+
+```js
+let a = "oneTwoThree";
+let words = a.split(/(?=[A-Z])/).join(" ");
+console.log(words); // output: "one Two Three"
+```
+
+In this code, the `split()` method is used to split the string at each uppercase letter using a regular expression `/(?=[A-Z])/`. The resulting array is then joined with a space character using the `join()` method. Finally, the resulting string is printed to the console using `console.log()`.
+
+#### 2.How to find the second maximum value from an array in JavaScript? Can you provide a
+
+solution with and without using built-in functions?
+
+Sure, here's one solution to find the second maximum value from an array in JavaScript using a custom function:
+
+```js
+function findSecondMax(arr) {
+  let max = arr[0];
+  let secondMax = null;
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      secondMax = max;
+      max = arr[i];
+    } else if (arr[i] !== max && (secondMax === null || arr[i] > secondMax)) {
+      secondMax = arr[i];
+    }
+  }
+
+  return secondMax;
+}
+
+// Example usage:
+const arr = [10, 20, 30, 40, 50];
+console.log(findSecondMax(arr)); // Output: 40
+```
+
+This solution iterates through the array and keeps track of the current maximum and second maximum values. It returns the second maximum value at the end.
+
+Here's another solution without using built-in functions:
+
+```js
+function findSecondMax(arr) {
+  let max = arr[0];
+
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+
+  let secondMax = null;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== max && (secondMax === null || arr[i] > secondMax)) {
+      secondMax = arr[i];
+    }
+  }
+
+  return secondMax;
+}
+
+// Example usage:
+const arr = [10, 20, 30, 40, 50];
+console.log(findSecondMax(arr)); // Output: 40
+```
+
+This solution first finds the maximum value by iterating through the array once. Then it iterates through the array again to find the second maximum value, ignoring the maximum value itself.
+
+##### 3.How can you merge three objects in JavaScript? Can you provide a solution with and without using built-in functions?
+
+Yes, we can merge three objects in JavaScript using both built-in and custom functions. Here are the solutions:
+
+Using Built-in Functions:
+
+```javascript
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+const obj3 = { e: 5, f: 6 };
+
+const mergedObject = Object.assign(obj1, obj2, obj3);
+console.log(mergedObject);
+```
+
+Output:
+
+```
+{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 }
+```
+
+Using Custom Function:
+
+```javascript
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+const obj3 = { e: 5, f: 6 };
+
+function mergeObjects(...objs) {
+  const merged = {};
+  for (let i = 0; i < objs.length; i++) {
+    const keys = Object.keys(objs[i]);
+    for (let j = 0; j < keys.length; j++) {
+      merged[keys[j]] = objs[i][keys[j]];
+    }
+  }
+  return merged;
+}
+
+const mergedObject = mergeObjects(obj1, obj2, obj3);
+console.log(mergedObject);
+```
+
+Output:
+
+```
+{ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 }
+```
+
+Both solutions will merge the objects and create a new object with all the properties from the three objects. The built-in solution uses the `Object.assign()` method, which merges the objects from left to right. The custom solution uses a function that takes any number of objects and iterates over each property to merge them into a new object.
+
+##### 4.How to merge multiple objects into a single object and remove duplicates in JavaScript? Can you provide a solution with and without using built-in functions?
+
+To merge multiple objects into a single object and remove duplicates in JavaScript, you can use a combination of the spread operator, the `reduce()` method, and the `Object.values()` method. Here is an example solution:
+
+Using built-in functions:
+
+```js
+const obj1 = { a: 1, b: 2 };
+const obj2 = { b: 3, c: 4 };
+const obj3 = { c: 5, d: 6 };
+
+const merged = Object.values(
+  [obj1, obj2, obj3].reduce((acc, cur) => ({ ...acc, ...cur }), {})
+);
+
+const result = [...new Set(merged)];
+
+console.log(result); // [1, 2, 3, 4, 5, 6]
+```
+
+Without using built-in functions:
+
+```js
+const obj1 = { a: 1, b: 2 };
+const obj2 = { b: 3, c: 4 };
+const obj3 = { c: 5, d: 6 };
+
+const merged = [obj1, obj2, obj3].reduce((acc, cur) => {
+  for (const [key, value] of Object.entries(cur)) {
+    if (!acc.hasOwnProperty(key)) {
+      acc[key] = value;
+    }
+  }
+  return acc;
+}, {});
+
+const result = Object.values(merged);
+
+console.log(result); // [1, 2, 3, 4, 5, 6]
+```
+
+In both solutions, we first create three objects `obj1`, `obj2`, and `obj3`. We then use the `reduce()` method to merge these objects into a single object using the spread operator. Finally, we use the `Object.values()` method to get an array of all the values in the merged object, and then we use the `Set` object to remove duplicates.

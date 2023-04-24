@@ -24,3 +24,13 @@ Promise.reject()
   })
   .catch(() => console.log("Error"));
 ```
+
+##### 2.Can you explain what the Event Loop is in Node.js and how it works?
+
+Sure! In Node.js, the Event Loop is the mechanism that allows for non-blocking I/O operations. It is responsible for handling asynchronous events in a single-threaded environment, allowing for the execution of multiple tasks at the same time without blocking the main thread.
+
+The Event Loop works by continuously checking a queue of tasks that are waiting to be executed. When an event occurs, such as a network request or a timer expiring, the corresponding callback function is added to the queue of tasks. The Event Loop then runs through the queue of tasks, executing each one in order until the queue is empty.
+
+The Event Loop consists of several phases, including timers, I/O callbacks, idle, and poll. During each phase, the Event Loop checks for tasks to execute, and if there are none, moves to the next phase. If there are tasks to execute, the Event Loop runs through them until the queue is empty or it has reached the end of the current phase.
+
+By using the Event Loop, Node.js can handle large numbers of concurrent requests without the need for additional threads or processes, making it an efficient and scalable platform for building server-side applications.

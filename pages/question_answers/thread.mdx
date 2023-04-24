@@ -1,0 +1,27 @@
+### Thread
+
+#### InterviewBit
+
+##### 1.What is a thread pool and which library handles it in Node.js
+
+The Thread pool is handled by the libuv library. libuv is a multi-platform C library that provides support for asynchronous I/O-based operations such as file systems, networking, and concurrency.
+
+##### 2. How are worker threads different from clusters?
+
+**Cluster:**
+
+There is one process on each CPU with an IPC to communicate.
+
+In case we want to have multiple servers accepting HTTP requests via a single port, clusters can be helpful.
+
+The processes are spawned in each CPU thus will have separate memory and node instance which further will lead to memory issues.
+
+**Worker threads:**
+
+There is only one process in total with multiple threads.
+
+Each thread has one Node instance (one event loop, one JS engine) with most of the APIs accessible.
+
+Shares memory with other threads (e.g. SharedArrayBuffer)
+
+This can be used for CPU-intensive tasks like processing data or accessing the file system since NodeJS is single-threaded, synchronous tasks can be made more efficient leveraging the worker's threads.

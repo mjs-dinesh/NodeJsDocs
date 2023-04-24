@@ -1,3 +1,13 @@
+### Cluster
+
+#### InterviewBit
+
+##### 1.Enhancing Node.js performance through clustering.
+
+Node.js applications run on a single processor, which means that by default they don’t take advantage of a multiple-core system. Cluster mode is used to start up multiple node.js processes thereby having multiple instances of the event loop. When we start using cluster in a nodejs app behind the scene multiple node.js processes are created but there is also a parent process called the cluster manager which is responsible for monitoring the health of the individual instances of our application.
+
+![Cluster](https://s3.ap-south-1.amazonaws.com/myinterviewtrainer-domestic/public_assets/assets/000/000/046/original/clustering_in_Nodejs.png?1614761684)
+
 ```js
 const cluster = require("cluster");
 const cpuCount = require("os").cpus().length;
