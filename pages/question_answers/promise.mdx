@@ -1,1 +1,28 @@
 ### Promise
+
+```js
+const promise = (isResolve) => {
+  return new Promise((resolve, reject) => {
+    if (isResolve) {
+      setTimeout(() => {
+        resolve("Success");
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        reject("Error");
+      }, 2000);
+    }
+  });
+};
+
+const promiseResult = async () => {
+  await promise(true)
+    .then((res) => console.log({ res }))
+    .catch((err) => console.log(err));
+  await promise(false)
+    .then((res) => console.log({ res }))
+    .catch((err) => console.log({ err }));
+};
+
+promiseResult();
+```

@@ -1,0 +1,36 @@
+### Hoisting
+
+```js
+a = 10;
+console.log({ a });
+var a;
+
+b = 10;
+console.log({ b });
+let b;
+
+const a = 10;
+console.log(a);
+
+console.log(Fn());
+
+function Fn() {
+  console.log("Function");
+  return "fn";
+}
+```
+
+### Hoisting Chain
+
+```js
+let a = 10;
+function name() {
+  let b = 20;
+  function add() {
+    let c = 30;
+    return a + b + c;
+  }
+  return add();
+}
+console.log(name());
+```

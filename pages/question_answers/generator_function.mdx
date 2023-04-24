@@ -1,0 +1,16 @@
+```js
+function* genFun(index) {
+  while (index < 100) {
+    yield index;
+    index++;
+  }
+}
+
+const fun = genFun(0);
+let funData = fun.next();
+while (!funData.done) {
+  console.log(funData); // { value: Number, done: false }
+  funData = fun.next();
+}
+console.log(funData); // { value: undefined, done: true }
+```

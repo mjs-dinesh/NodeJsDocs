@@ -1,0 +1,29 @@
+### Higher Order Function or First Class Function
+
+##### Interview Bit
+
+##### 1. What is a first class function in Javascript?
+
+When functions can be treated like any other variable then those functions are first-class functions. There are many other programming languages, for example, scala, Haskell, etc which follow this including JS. Now because of this function can be passed as a param to another function(callback) or a function can return another function(higher-order function). map() and filter() are higher-order functions that are popularly used.
+
+##### Example
+
+Here is an example of a first-class function in JavaScript:
+
+```js
+// Define a function that takes another function as a parameter
+function higherOrderFunction(callbackFunction) {
+  console.log("The higher-order function was called!");
+  callbackFunction();
+}
+
+// Define a function that can be passed as a parameter to another function
+function callbackFunction() {
+  console.log("The callback function was called!");
+}
+
+// Call the higher-order function and pass the callback function as a parameter
+higherOrderFunction(callbackFunction);
+```
+
+In this example, `higherOrderFunction` is a first-class function because it takes another function (`callbackFunction`) as a parameter. `callbackFunction` is also a first-class function because it can be passed as a parameter to another function.

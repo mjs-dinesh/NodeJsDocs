@@ -2,7 +2,7 @@
 
 #### 1.What is Callback Hell and what are some solutions to it?
 
-##### ChatGPT Solution.
+##### ChatGPT Explanation.
 
 Callback Hell, also known as Pyramid of Doom, is a common problem in asynchronous programming where the code structure becomes excessively nested and difficult to read and maintain due to the extensive use of callbacks. This problem arises when a series of asynchronous operations are dependent on each other, and each operation requires the result of the previous operation to proceed.
 
@@ -22,15 +22,48 @@ By adopting one or more of these solutions, developers can avoid Callback Hell a
 
 ##### Example
 
+Here's an example of callback hell:
+
+```js
+getUser(userId, (error, user) => {
+  if (error) {
+    console.log(`Error: ${error}`);
+    return;
+  }
+
+  getOrders(user.id, (error, orders) => {
+    if (error) {
+      console.log(`Error: ${error}`);
+      return;
+    }
+
+    getProducts(orders, (error, products) => {
+      if (error) {
+        console.log(`Error: ${error}`);
+        return;
+      }
+
+      console.log(`User ${user.name} has ordered ${products.length} products.`);
+    });
+  });
+});
+```
+
+In this example, three asynchronous functions are called one after the other using callbacks. Each callback function is nested inside the previous one, creating a pyramid-like structure. This can quickly become difficult to read and manage as the number of nested callbacks grows.
+
+One solution to this is to use named functions instead of anonymous functions, which can make the code more readable and easier to understand. Another solution is to use promises or async/await syntax to avoid nested callbacks altogether.
+
+##### Solutions
+
 There are several solutions to avoid Callback Hell in Node.js:
 
 1. Modularization: Break down large callback functions into smaller, manageable functions that can be organized into separate modules.
 
 Example:
 
-```
+```js
 function getUsers(callback) {
-  db.query('SELECT * FROM users', function(err, users) {
+  db.query("SELECT * FROM users", function (err, users) {
     if (err) {
       callback(err);
     } else {
@@ -40,25 +73,29 @@ function getUsers(callback) {
 }
 
 function getOrders(userId, callback) {
-  db.query('SELECT * FROM orders WHERE user_id = ?', userId, function(err, orders) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, orders);
+  db.query(
+    "SELECT * FROM orders WHERE user_id = ?",
+    userId,
+    function (err, orders) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, orders);
+      }
     }
-  });
+  );
 }
 
-getUsers(function(err, users) {
+getUsers(function (err, users) {
   if (err) {
     console.error(err);
   } else {
-    users.forEach(function(user) {
-      getOrders(user.id, function(err, orders) {
+    users.forEach(function (user) {
+      getOrders(user.id, function (err, orders) {
         if (err) {
           console.error(err);
         } else {
-          console.log('Orders for user ' + user.name + ':', orders);
+          console.log("Orders for user " + user.name + ":", orders);
         }
       });
     });
@@ -70,10 +107,10 @@ getUsers(function(err, users) {
 
 Example:
 
-```
+```js
 function getUsers() {
-  return new Promise(function(resolve, reject) {
-    db.query('SELECT * FROM users', function(err, users) {
+  return new Promise(function (resolve, reject) {
+    db.query("SELECT * FROM users", function (err, users) {
       if (err) {
         reject(err);
       } else {
@@ -84,142 +121,34 @@ function getUsers() {
 }
 
 function getOrders(userId) {
-  return new Promise(function(resolve, reject) {
-    db.query('SELECT * FROM orders WHERE user_id = ?', userId, function(err, orders) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(orders);
-      }
-    });
-  });
-}
-
-getUsers()
-  .then(function(users) {
-    users.forEach(function(user) {
-      getOrders(user.id)
-        .then(function(orders) {
-          console.log('Orders for user ' + user.name + ':', orders);
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
-    });
-  })
-  .catch(function(err) {
-    console.error(err);
-  });
-```
-
-3. Async/await: Use async/await to write asynchronous code in a synchronous-looking way, making it easier to read and understand.
-
-Example:
-
-```
-async function getUsersAndOrders() {
-  try {
-    const users = await getUsers();
-    for (const user of users) {
-      const orders = await getOrders(user.id);
-      console.log('Orders for user ' + user.name + ':', orders);
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-getUsersAndOrders();
-```
-
-### Solution
-
-There are several solutions to avoid Callback Hell in Node.js:
-
-1. Modularization: Break down large callback functions into smaller, manageable functions that can be organized into separate modules.
-
-Example:
-
-```
-function getUsers(callback) {
-  db.query('SELECT * FROM users', function(err, users) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, users);
-    }
-  });
-}
-
-function getOrders(userId, callback) {
-  db.query('SELECT * FROM orders WHERE user_id = ?', userId, function(err, orders) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, orders);
-    }
-  });
-}
-
-getUsers(function(err, users) {
-  if (err) {
-    console.error(err);
-  } else {
-    users.forEach(function(user) {
-      getOrders(user.id, function(err, orders) {
+  return new Promise(function (resolve, reject) {
+    db.query(
+      "SELECT * FROM orders WHERE user_id = ?",
+      userId,
+      function (err, orders) {
         if (err) {
-          console.error(err);
+          reject(err);
         } else {
-          console.log('Orders for user ' + user.name + ':', orders);
+          resolve(orders);
         }
-      });
-    });
-  }
-});
-```
-
-2. Promises: Use Promises to simplify asynchronous code and eliminate the need for nested callbacks.
-
-Example:
-
-```
-function getUsers() {
-  return new Promise(function(resolve, reject) {
-    db.query('SELECT * FROM users', function(err, users) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(users);
       }
-    });
-  });
-}
-
-function getOrders(userId) {
-  return new Promise(function(resolve, reject) {
-    db.query('SELECT * FROM orders WHERE user_id = ?', userId, function(err, orders) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(orders);
-      }
-    });
+    );
   });
 }
 
 getUsers()
-  .then(function(users) {
-    users.forEach(function(user) {
+  .then(function (users) {
+    users.forEach(function (user) {
       getOrders(user.id)
-        .then(function(orders) {
-          console.log('Orders for user ' + user.name + ':', orders);
+        .then(function (orders) {
+          console.log("Orders for user " + user.name + ":", orders);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.error(err);
         });
     });
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.error(err);
   });
 ```
@@ -228,13 +157,13 @@ getUsers()
 
 Example:
 
-```
+```js
 async function getUsersAndOrders() {
   try {
     const users = await getUsers();
     for (const user of users) {
       const orders = await getOrders(user.id);
-      console.log('Orders for user ' + user.name + ':', orders);
+      console.log("Orders for user " + user.name + ":", orders);
     }
   } catch (err) {
     console.error(err);

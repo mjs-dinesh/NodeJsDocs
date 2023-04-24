@@ -1,0 +1,22 @@
+```js
+const cluster = require("cluster");
+const cpuCount = require("os").cpus().length;
+const express = require("express");
+const app = express();
+const http = require("http");
+
+if (cluster.isMaster) {
+  console.log("is Master");
+  for (x = 0; x < cpuCount; x++) {
+    cluster.fork();
+  }
+} else {
+  app.get("/", (req, res) => {
+    res.status(200).send(`${process.pid}`);
+  });
+
+  app.listen(8001, () => {
+    console.log("app connected");
+  });
+}
+```

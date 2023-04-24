@@ -1,0 +1,14 @@
+```
+const { EventEmitter } = require('events')
+const MyEventEmitter = new EventEmitter()
+
+MyEventEmitter.on('send', (cb) => {
+    console.log("Event Listner") // Event Listner
+    cb("Event Emitter")
+})
+
+MyEventEmitter.emit("send", (msg) => {
+    console.log("Event Emitter") // Event Emitter
+    console.log(msg) // Event Emitter
+})
+```

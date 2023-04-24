@@ -11,3 +11,16 @@ When a request comes in, Node.js adds it to the event queue, and the event loop 
 If the callback is synchronous, it will be executed immediately. However, if the callback is asynchronous, the event loop delegates it to the appropriate worker threads or the thread pool, and registers a callback to be executed when the operation is complete.
 
 Once the operation is complete, the event loop retrieves the callback from the event queue and executes it. This cycle of adding events to the queue, executing their callbacks, and processing new events continues indefinitely as long as the Node.js process is running.
+
+```js
+console.log("Start");
+setTimeout(() => console.log("Timer 1 finished"), 0);
+Promise.resolve().then(() => console.log("Promise 1 finished"));
+Promise.resolve().then(() => console.log("Promise 2 finished"));
+console.log("End");
+Promise.reject()
+  .then(() => {
+    console.log("response");
+  })
+  .catch(() => console.log("Error"));
+```
