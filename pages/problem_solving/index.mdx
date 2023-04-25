@@ -12,9 +12,7 @@ console.log(words); // output: "one Two Three"
 
 In this code, the `split()` method is used to split the string at each uppercase letter using a regular expression `/(?=[A-Z])/`. The resulting array is then joined with a space character using the `join()` method. Finally, the resulting string is printed to the console using `console.log()`.
 
-#### 2.How to find the second maximum value from an array in JavaScript? Can you provide a
-
-solution with and without using built-in functions?
+#### 2.How to find the second maximum value from an array in JavaScript? Can you provide a solution with and without using built-in functions?
 
 Sure, here's one solution to find the second maximum value from an array in JavaScript using a custom function:
 
@@ -88,7 +86,7 @@ console.log(mergedObject);
 
 Output:
 
-```
+```js
 { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 }
 ```
 
@@ -116,7 +114,7 @@ console.log(mergedObject);
 
 Output:
 
-```
+```js
 { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 }
 ```
 
@@ -164,3 +162,179 @@ console.log(result); // [1, 2, 3, 4, 5, 6]
 ```
 
 In both solutions, we first create three objects `obj1`, `obj2`, and `obj3`. We then use the `reduce()` method to merge these objects into a single object using the spread operator. Finally, we use the `Object.values()` method to get an array of all the values in the merged object, and then we use the `Set` object to remove duplicates.
+
+##### 5.How would you find the number of occurrences of a character in a string in JavaScript?
+
+To find the number of occurrences of a character in a string in JavaScript, you can use a combination of `split()` and `filter()` methods as follows:
+
+```javascript
+const str = "hello world";
+const char = "l";
+const count = str.split("").filter((c) => c === char).length;
+console.log(count); // 3
+```
+
+Here, the `split()` method is used to split the string into an array of characters, and then `filter()` is used to create a new array containing only the matching characters. Finally, the length of the filtered array is returned as the count.
+
+Another way to do this is to use a regular expression and the `match()` method as follows:
+
+```javascript
+const str = "hello world";
+const char = "l";
+const regex = new RegExp(char, "g");
+const count = (str.match(regex) || []).length;
+console.log(count); // 3
+```
+
+Here, a regular expression is created with the `g` flag to match all occurrences of the character. The `match()` method is then used to find all the matches in the string, and the length of the resulting array is returned as the count. The `|| []` is used to handle the case when there are no matches, in which case `match()` returns `null`, and the length of `null` is not defined.
+
+##### 6.Can you explain how to print the outermost elements of a 4x4 matrix in a spiral order?
+
+Yes, sure! To print the outermost elements of a 4x4 matrix in a spiral order, you can follow these steps:
+
+1. Create the 4x4 matrix and initialize its values.
+2. Create four variables to keep track of the boundaries of the matrix: `top`, `bottom`, `left`, and `right`.
+3. Loop through the elements of the matrix in a spiral order, starting from the top-left corner and moving clockwise. At each iteration, check if the current element is on the outermost layer of the matrix, and print it if it is.
+4. Update the values of `top`, `bottom`, `left`, and `right` as you move through the matrix, so that the loop only iterates through the remaining elements.
+
+Here is a code example in JavaScript:
+
+```js
+const matrix = [
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9, 10, 11, 12],
+  [13, 14, 15, 16],
+];
+
+let top = 0;
+let bottom = matrix.length - 1;
+let left = 0;
+let right = matrix[0].length - 1;
+
+while (top <= bottom && left <= right) {
+  // Print top row
+  for (let i = left; i <= right; i++) {
+    console.log(matrix[top][i]);
+  }
+  top++;
+
+  // Print right column
+  for (let i = top; i <= bottom; i++) {
+    console.log(matrix[i][right]);
+  }
+  right--;
+
+  // Print bottom row
+  if (top <= bottom) {
+    for (let i = right; i >= left; i--) {
+      console.log(matrix[bottom][i]);
+    }
+    bottom--;
+  }
+
+  // Print left column
+  if (left <= right) {
+    for (let i = bottom; i >= top; i--) {
+      console.log(matrix[i][left]);
+    }
+    left++;
+  }
+}
+```
+
+This code will output the elements of the 4x4 matrix in a spiral order, starting from the outermost layer:
+
+```js
+1;
+2;
+3;
+4;
+8;
+12;
+16;
+15;
+14;
+13;
+9;
+5;
+6;
+7;
+11;
+10;
+```
+
+##### 7.Write a program in Javascript to merge two sorted arrays into a sorted form
+
+Sure, here is an example program in JavaScript to merge two sorted arrays into a sorted form:
+
+```javascript
+function mergeSortedArrays(arr1, arr2) {
+  let result = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] < arr2[j]) {
+      result.push(arr1[i]);
+      i++;
+    } else {
+      result.push(arr2[j]);
+      j++;
+    }
+  }
+
+  while (i < arr1.length) {
+    result.push(arr1[i]);
+    i++;
+  }
+
+  while (j < arr2.length) {
+    result.push(arr2[j]);
+    j++;
+  }
+
+  return result;
+}
+
+// Example usage:
+const arr1 = [1, 3, 5, 7];
+const arr2 = [2, 4, 6, 8];
+const mergedArray = mergeSortedArrays(arr1, arr2);
+console.log(mergedArray); // [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+In this program, we define a function `mergeSortedArrays` that takes in two sorted arrays `arr1` and `arr2` as input, and returns a new array that contains all the elements of `arr1` and `arr2` in a sorted form. The function uses a while loop to iterate over both arrays simultaneously, comparing the elements at the current index of each array and adding the smaller element to the `result` array. Once the loop has finished iterating over one of the arrays, the remaining elements of the other array are added to the `result` array. Finally, the `result` array is returned.
+
+###### 8.Write a program in Javascript to shift the kth element of an array from the start to the end.
+
+Here's an example program in JavaScript to shift the kth element of an array from the start to the end:
+
+```javascript
+function shiftKthElement(arr, k) {
+  // Calculate the index of the kth element from the start
+  const kIndex = k - 1;
+  // Remove the kth element from the start and save it to a variable
+  const kElement = arr.splice(kIndex, 1)[0];
+  // Add the kth element to the end of the array
+  arr.push(kElement);
+  // Return the updated array
+  return arr;
+}
+
+// Example usage
+const arr = [1, 2, 3, 4, 5];
+console.log(shiftKthElement(arr, 2)); // Output: [1, 3, 4, 5, 2]
+```
+
+In this program, the `shiftKthElement` function takes two arguments: an array and the index (k) of the element to be shifted from the start to the end of the array.
+
+First, we calculate the index of the kth element from the start (subtracting 1 since arrays are zero-indexed). Then, we use the `splice` method to remove the kth element from the start of the array and save it to a variable.
+
+Next, we use the `push` method to add the kth element to the end of the array. Finally, we return the updated array.
+
+In the example usage, we pass an array `[1, 2, 3, 4, 5]` and k value of 2 to the `shiftKthElement` function. The output will be `[1, 3, 4, 5, 2]`, which is the updated array with the second element (2) shifted from the start to the end.
+
+##### 9.How can you count the number of occurrences of a particular character in a JavaScript String,
+
+and what are some different approaches that can be used to achieve this?
