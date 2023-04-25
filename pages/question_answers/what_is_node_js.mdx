@@ -45,3 +45,11 @@ Event Loop processes simple requests and returns the responses to the correspond
 A single thread from Thread Pool is assigned to a single complex request
 
 Thread Pool performs the required task and returns the response to Event Loop, which in turn, returns the response to the client
+
+##### 3.What is the difference between blocking and non-blocking code?
+
+In programming, blocking refers to a situation where a process is halted or held up by another process that is executing, and it has to wait for that process to finish before it can continue executing. This means that while the process is blocked, it cannot do anything else, and it is essentially idle.
+
+In contrast, non-blocking code is code that does not cause the process to halt or wait for another process to finish. Instead, it continues executing other tasks, making it possible to perform multiple tasks at the same time.
+
+In the context of Node.js, the difference between blocking and non-blocking code is important because Node.js is designed to be non-blocking and asynchronous. This means that it can handle multiple connections and requests simultaneously, without blocking the event loop. Blocking code, on the other hand, can cause the event loop to become blocked, making it difficult to scale and handle large numbers of requests.

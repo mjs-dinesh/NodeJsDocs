@@ -1,0 +1,90 @@
+### Array
+
+##### 1.What are the different strategies to merge two arrays?
+
+There are multiple strategies to merge two arrays in JavaScript:
+
+1. Using the `concat()` method: The `concat()` method can be used to concatenate two or more arrays into a new array. It returns a new array that contains elements from both arrays.
+
+   Example:
+
+   ```js
+   const arr1 = [1, 2, 3];
+   const arr2 = [4, 5, 6];
+   const mergedArray = arr1.concat(arr2);
+   console.log(mergedArray); // Output: [1, 2, 3, 4, 5, 6]
+   ```
+
+2. Using the spread operator: The spread operator (`...`) can be used to spread the elements of one array into another. It creates a new array with the elements from both arrays.
+
+   Example:
+
+   ```js
+   const arr1 = [1, 2, 3];
+   const arr2 = [4, 5, 6];
+   const mergedArray = [...arr1, ...arr2];
+   console.log(mergedArray); // Output: [1, 2, 3, 4, 5, 6]
+   ```
+
+3. Using the `push()` method: The `push()` method can be used to add elements from one array into another. It modifies the original array and returns the new length of the array.
+
+   Example:
+
+   ```js
+   const arr1 = [1, 2, 3];
+   const arr2 = [4, 5, 6];
+   arr1.push(...arr2);
+   console.log(arr1); // Output: [1, 2, 3, 4, 5, 6]
+   ```
+
+4. Using the `splice()` method: The `splice()` method can be used to add elements from one array into another at a specified index. It modifies the original array and returns the removed elements.
+
+   Example:
+
+   ```js
+   const arr1 = [1, 2, 3];
+   const arr2 = [4, 5, 6];
+   arr1.splice(2, 0, ...arr2);
+   console.log(arr1); // Output: [1, 2, 4, 5, 6, 3]
+   ```
+
+5. Using the `concat()` method with spread operator: The `concat()` method can be used with spread operator (`...`) to merge two or more arrays into a new array.
+
+   Example:
+
+   ```js
+   const arr1 = [1, 2, 3];
+   const arr2 = [4, 5, 6];
+   const mergedArray = [].concat(...arr1, ...arr2);
+   console.log(mergedArray); // Output: [1, 2, 3, 4, 5, 6]
+   ```
+
+##### 2.How do you remove duplicate elements from an array in JavaScript? Provide an example.
+
+To remove duplicate elements from an array in JavaScript, one approach is to use the `Set` object which allows only unique values, and then convert the set back to an array. Here's an example:
+
+```javascript
+const arr = [1, 2, 3, 3, 4, 5, 5];
+const uniqueArr = [...new Set(arr)];
+console.log(uniqueArr); // Output: [1, 2, 3, 4, 5]
+```
+
+In this example, the `Set` object is created with the original array `arr`, which contains duplicate elements. Then, the spread syntax (`...`) is used to convert the set back to an array and assign it to the `uniqueArr` variable. The resulting `uniqueArr` array contains only the unique elements from the original array.
+
+##### 3.What is the syntax to add a new element at the beginning of an array in JavaScript?
+
+To add a new element at the beginning of an array in JavaScript, you can use the `unshift()` method. The syntax is as follows:
+
+```js
+array.unshift(newElement);
+```
+
+Where `array` is the array to which the element needs to be added, and `newElement` is the new element to be added.
+
+Here is an example:
+
+```js
+const arr = [2, 3, 4];
+arr.unshift(1);
+console.log(arr); // Output: [1, 2, 3, 4]
+```

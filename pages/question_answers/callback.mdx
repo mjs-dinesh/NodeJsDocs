@@ -1,8 +1,8 @@
-### Callback Hell
+### Callback
 
-#### 1.What is Callback Hell and what are some solutions to it?
+##### 1.What is Callback Hell and what are some solutions to it?
 
-##### ChatGPT Explanation.
+**ChatGPT Explanation.**
 
 Callback Hell, also known as Pyramid of Doom, is a common problem in asynchronous programming where the code structure becomes excessively nested and difficult to read and maintain due to the extensive use of callbacks. This problem arises when a series of asynchronous operations are dependent on each other, and each operation requires the result of the previous operation to proceed.
 
@@ -20,7 +20,7 @@ To overcome this issue, some solutions include:
 
 By adopting one or more of these solutions, developers can avoid Callback Hell and create more maintainable and readable code.
 
-##### Example
+**Example**
 
 Here's an example of callback hell:
 
@@ -53,7 +53,7 @@ In this example, three asynchronous functions are called one after the other usi
 
 One solution to this is to use named functions instead of anonymous functions, which can make the code more readable and easier to understand. Another solution is to use promises or async/await syntax to avoid nested callbacks altogether.
 
-##### Solutions
+**Solutions**
 
 There are several solutions to avoid Callback Hell in Node.js:
 
@@ -172,3 +172,36 @@ async function getUsersAndOrders() {
 
 getUsersAndOrders();
 ```
+
+##### 2.What is an error-first callback in Node.js?
+
+An error-first callback is a convention used in Node.js to handle errors that may occur during asynchronous operations. The callback function takes two parameters: the first parameter is reserved for any error that may occur during the operation, while the second parameter is for the result of the operation.
+
+This convention ensures that error handling is done consistently across Node.js modules and provides a predictable way of handling errors that may occur during asynchronous operations.
+
+Here's an example of an error-first callback function in Node.js:
+
+```js
+function readFile(path, callback) {
+  fs.readFile(path, "utf8", function (err, data) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, data);
+    }
+  });
+}
+
+// Example usage
+readFile("example.txt", function (err, data) {
+  if (err) {
+    console.error("Error reading file:", err);
+  } else {
+    console.log("File contents:", data);
+  }
+});
+```
+
+In this example, `readFile` is a function that takes a file path and a callback function as arguments. It reads the contents of the file using Node.js' built-in `fs` module and then calls the callback with an error (if there was one) and the file data (if there wasn't an error). The callback function follows the error-first pattern, where the first argument is the error (if there was one) and the second argument is the data (if there wasn't an error).
+
+When we call `readFile`, we pass in an anonymous function as the callback. This function checks for an error and logs it to the console if there was one, or logs the file contents if there wasn't an error. This is a common pattern for error-first callback functions in Node.js.

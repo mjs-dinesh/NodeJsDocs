@@ -30,3 +30,45 @@ if (cluster.isMaster) {
   });
 }
 ```
+
+##### 2.What is the purpose of the cluster module in Node.js? How does it work?
+
+The cluster module is a built-in module in Node.js that enables the creation of child processes, also known as workers, that can run in parallel and share the same server port. It is used for scaling Node.js applications across multiple CPU cores to improve performance and handle more concurrent requests.
+
+When the cluster module is used, a master process is created that manages the workers. The master process listens for incoming connections and distributes the work to the workers. Each worker runs its own event loop and can handle requests independently. The master process also monitors the workers and can restart them if they crash or fail to respond.
+
+Here is an example code snippet demonstrating the basic usage of the cluster module:
+
+```javascript
+const cluster = require("cluster");
+const http = require("http");
+const numCPUs = require("os").cpus().length;
+
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork();
+  });
+} else {
+  // Worker process
+  console.log(`Worker ${process.pid} started`);
+
+  http
+    .createServer((req, res) => {
+      res.writeHead(200);
+      res.end("Hello, world!");
+    })
+    .listen(8000);
+
+  console.log(`Worker ${process.pid} listening on port 8000`);
+}
+```
+
+In this example, the `cluster.isMaster` property is used to determine whether the current process is the master or a worker. If it is the master, it forks the required number of workers using the `cluster.fork()` method. It also listens for the `exit` event and restarts the worker if it dies. If it is a worker, it creates an HTTP server and listens on port 8000.

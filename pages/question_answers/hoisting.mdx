@@ -1,5 +1,31 @@
 ### Hoisting
 
+##### 1. What is hoisting?
+
+Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their respective scopes at compile time. This means that regardless of where declarations occur in the code, they are processed before the code is executed.
+
+Variable declarations are hoisted to the top of their scope, but their values are not. This means that a variable can be declared and initialized anywhere in the code, but the variable's value will only be available after the declaration.
+
+Function declarations are also hoisted to the top of their scope, and their values are available immediately. This means that a function can be called before it is declared in the code, and it will still work as expected.
+
+Here's an example to illustrate hoisting:
+
+```
+console.log(a); // Output: undefined
+var a = 10;
+
+foo(); // Output: "Hello, world!"
+function foo() {
+  console.log("Hello, world!");
+}
+```
+
+In this example, the variable `a` is declared and initialized to `10` after the `console.log(a)` statement, but when we run the code, the output is `undefined`. This is because the variable declaration is hoisted to the top of the scope, but the value is not.
+
+In the second part of the example, the function `foo` is called before it is declared in the code, but it still works as expected because function declarations are hoisted to the top of their scope.
+
+Hoisting can sometimes lead to unexpected behavior, so it's important to be aware of how it works and to declare variables and functions in the appropriate places in the code.
+
 ```js
 a = 10;
 console.log({ a });
@@ -34,3 +60,24 @@ function name() {
 }
 console.log(name());
 ```
+
+##### 2.What is variable hoisting in JavaScript? How does it work? Explain the concept of scopes in JavaScript.
+
+Variable hoisting is a JavaScript mechanism that allows variables and function declarations to be moved to the top of their scope before code execution. This means that variables and functions can be used before they are declared in the code.
+
+In JavaScript, there are two types of scopes: global scope and local scope. Global scope refers to variables or functions that can be accessed from anywhere in the code, while local scope refers to variables or functions that are only accessible within a certain block of code, such as a function.
+
+JavaScript has function-level scope, which means that variables declared within a function are only accessible within that function. The let and const keywords, introduced in ES6, also have block-level scope, which means that variables declared with them are only accessible within the block they are declared in, such as a for loop or if statement.
+
+The concept of scopes in JavaScript refers to the hierarchy of access that variables and functions have within a piece of code. Inner scopes can access variables and functions from outer scopes, but outer scopes cannot access variables and functions from inner scopes.
+
+Here is an example of variable hoisting in JavaScript:
+
+```js
+console.log(myVar); // undefined
+var myVar = "Hello, world!";
+```
+
+In this example, the variable `myVar` is declared after it is used in the console.log statement. However, because of variable hoisting, the declaration of `myVar` is moved to the top of the scope, and the output of the code is `undefined`.
+
+To avoid issues with variable hoisting and to make code more readable and maintainable, it is generally recommended to declare variables at the beginning of their scope, rather than relying on variable hoisting.

@@ -1,7 +1,4 @@
 {
   "index": "Getting Started",
-  "what_is_node_js": "Node Js Architecture",
-  "event_loop": "Event Loop",
-  "callback_hell": "Callback Hell",
-  "middleware": "Middleware"
+  "what_is_node_js": "Node Js Architecture"
 }

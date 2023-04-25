@@ -1,0 +1,22 @@
+### ES6
+
+##### 1.What is the spread operator in JavaScript?
+
+The spread operator is a syntax introduced in ECMAScript 6 (ES6) that allows an iterable (like an array or a string) to be expanded into individual elements. It is represented by three consecutive dots "..." and is used in various contexts in JavaScript.
+
+When used with arrays, the spread operator can be used to:
+
+- Copy an array: `[...originalArray]`
+- Merge arrays: `[...array1, ...array2]`
+- Add elements to an array: `[...originalArray, element1, element2]`
+- Convert an iterable object (like a string) to an array: `[...iterableObject]`
+
+The spread operator can also be used with objects to create a new object with properties from an existing object:
+
+```js
+const obj1 = { x: 1, y: 2 };
+const obj2 = { ...obj1, z: 3 };
+console.log(obj2); // { x: 1, y: 2, z: 3 }
+```
+
+Overall, the spread operator is a useful and concise way to manipulate arrays and objects in JavaScript.
