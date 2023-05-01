@@ -10,5 +10,9 @@
   "problem_solving": {
     "title": "Problem Solving",
     "type": "page"
+  },
+  "scenario_based_questions": {
+    "title": "Scenario Based Questions",
+    "type": "page"
   }
 }
