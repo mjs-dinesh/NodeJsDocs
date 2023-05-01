@@ -10,6 +10,11 @@ const config: DocsThemeConfig = {
   footer: {
     text: "Node Js Interview Template",
   },
+  useNextSeoProps() {
+    return {
+      titleTemplate: "Node Js Docs",
+    };
+  },
 };
 
 export default config;
