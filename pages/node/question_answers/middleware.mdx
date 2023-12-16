@@ -1,0 +1,138 @@
+### Middleware
+
+**Interview Bit**
+
+##### 1.What is middleware?
+
+Middleware comes in between your request and business logic. It is mainly used to capture logs and enable rate limit, routing, authentication, basically whatever that is not a part of business logic. There are third-party middleware also such as body-parser and you can write your own middleware for a specific use case.
+
+```js
+const middleware = (req, res, next) => {
+  req.message = "Hello word!!!";
+  next();
+};
+
+app.get("/", middleware, (req, res) => {
+  const msg = req.message;
+  res.send(msg);
+});
+```
+
+**ChatGPT**
+
+##### 2.How can you add custom middleware in Node.js for handling requests?
+
+In Node.js, middleware is a function that is executed in the request-response cycle. It can perform various tasks such as logging, authentication, and error handling. Here's how you can add custom middleware in Node.js:
+
+1. Create a function that takes three arguments: request, response, and next. This function will be the middleware.
+
+```javascript
+function customMiddleware(req, res, next) {
+  // Do some operation
+  next(); // Call the next middleware or the route handler
+}
+```
+
+2. Call the middleware function in your route handler using the `use()` method of the `app` object. The `use()` method adds the middleware function to the middleware stack.
+
+```javascript
+app.use(customMiddleware);
+```
+
+Now, every time a request is made, the `customMiddleware` function will be executed.
+
+You can also add middleware to specific routes by calling the `use()` method on the `Router` object:
+
+```javascript
+const router = express.Router();
+
+router.use(customMiddleware);
+
+router.get("/", (req, res) => {
+  // Route handler
+});
+```
+
+In this example, the `customMiddleware` function will only be executed for the `/` route.
+
+##### 3.What is middleware chaining and how does it work in Node.js?
+
+In Node.js, middleware chaining refers to the process of executing multiple middleware functions in a specific order to handle a request. When a request is made to the server, the middleware functions are called in the order they are added to the middleware stack. Each middleware function can modify the request and response objects, and can pass control to the next middleware function in the chain by calling the `next()` function.
+
+Here's an example of middleware chaining in Node.js:
+
+```javascript
+const express = require("express");
+const app = express();
+
+// Middleware function 1
+const middleware1 = (req, res, next) => {
+  console.log("Middleware function 1");
+  next();
+};
+
+// Middleware function 2
+const middleware2 = (req, res, next) => {
+  console.log("Middleware function 2");
+  next();
+};
+
+// Middleware function 3
+const middleware3 = (req, res) => {
+  console.log("Middleware function 3");
+  res.send("Hello World!");
+};
+
+// Middleware chaining
+app.use(middleware1);
+app.use(middleware2);
+app.use(middleware3);
+```
+
+In the above example, we define three middleware functions `middleware1`, `middleware2`, and `middleware3`. We then add them to the middleware stack in order using the `app.use()` method. When a request is made to the server, the middleware functions are executed in order, and each middleware function calls the `next()` function to pass control to the next middleware function in the chain. Finally, the last middleware function `middleware3` sends the response back to the client.
+
+##### 4.Explain express middlewares?
+
+In the context of Node.js and the Express web framework, middleware refers to a function or a series of functions that intercept an HTTP request or response and perform some action on it before it is handled by the final handler. The main purpose of middleware is to provide a modular approach to adding functionality to an application, making it easier to write and maintain code.
+
+Express middleware functions can be used for a variety of purposes, such as logging requests, parsing request bodies, authenticating users, handling errors, and more. Middleware functions are executed in the order in which they are defined, and each middleware function has access to the HTTP request and response objects, as well as the next middleware function in the stack.
+
+Middleware functions can be defined at the application level, the router level, or the route level. Application-level middleware functions are executed for every request that is made to the application, while router-level middleware functions are executed for every request that matches a specific route pattern. Route-level middleware functions are executed only for the specific route that they are defined for.
+
+To use middleware in an Express application, you can use the `use` method to register a middleware function. For example:
+
+```javascript
+const express = require("express");
+const app = express();
+
+// Application-level middleware function
+app.use((req, res, next) => {
+  console.log("Request received");
+  next();
+});
+
+// Router-level middleware function
+const router = express.Router();
+router.use((req, res, next) => {
+  console.log("Request to /users received");
+  next();
+});
+
+// Route-level middleware function
+router.get("/", (req, res) => {
+  console.log("Handling GET request for /users");
+  res.send("Users page");
+});
+
+// Mount the router
+app.use("/users", router);
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server started on port 3000");
+});
+```
+
+In this example, we define an application-level middleware function that logs a message to the console for every request that is received by the application. We also define a router-level middleware function that logs a message for every request that matches the `/users` route pattern, and a route-level middleware function that logs a message for every GET request to the `/users` route. Finally, we mount the router on the `/users` path and start the server.
+
+When a request is received by the server, it will first be intercepted by the application-level middleware function, which will log a message to the console. Then, the request will be passed on to the router-level middleware function, which will log a message if the request matches the `/users` route pattern. Finally, the request will be passed on to the route-level middleware function, which will log a message for every GET request to the `/users` route.

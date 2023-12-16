@@ -1,0 +1,43 @@
+### Closure
+
+##### 1.What is closures in js?
+
+In JavaScript, a closure is a function that has access to variables in its outer lexical scope, even after the outer function has returned.
+
+To create a closure, you define a function inside another function, and the inner function can access the variables of the outer function, even after the outer function has returned. The inner function forms a closure around the variables of the outer function.
+
+Here's an example:
+
+```js
+function outerFunction() {
+  let outerVar = "I am in the outer function";
+
+  function innerFunction() {
+    console.log(outerVar);
+  }
+
+  return innerFunction;
+}
+
+let closure = outerFunction();
+closure(); // Output: "I am in the outer function"
+```
+
+In this example, `outerFunction` defines a variable `outerVar` and a function `innerFunction`, which logs the value of `outerVar` to the console. `outerFunction` then returns `innerFunction`.
+
+When we call `outerFunction`, it returns the `innerFunction`, which we assign to the variable `closure`. When we call `closure`, it logs the value of `outerVar` to the console, even though `outerFunction` has already returned. This is because `closure` has formed a closure around the `outerVar` variable.
+
+Closures are often used in JavaScript to create private variables and methods in object-oriented programming, to implement currying and partial application in functional programming, and to manage asynchronous code.
+
+```js
+const firstFn = () => {
+  let a = "Im outer function variable";
+  function secoundFunction() {
+    return a;
+  }
+  return secoundFunction;
+};
+
+const fn = firstFn();
+console.log(fn()); // Im outer function variable
+```

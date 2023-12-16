@@ -1,0 +1,161 @@
+### database
+
+##### 1.Which database did you use with node.js?
+
+Node.js has support for various databases including MongoDB, MySQL, PostgreSQL, Redis, and many more. Node.js provides drivers and modules to connect with these databases and perform various database operations. The choice of database depends on the specific requirements of the project.
+
+##### 2.What is an index in a database and how does it work?
+
+An index is a data structure used in databases to optimize the performance of database queries. It is similar to an index in a book that allows readers to quickly locate information within the book.
+
+In a database, an index is created on one or more columns of a table. This creates a separate data structure that contains the indexed column(s) and a pointer to the location of the corresponding row(s) in the table. When a query is executed on a table, the database can use the index to quickly locate the relevant rows, rather than scanning the entire table.
+
+Indexes can greatly improve the performance of database queries, especially on large tables. However, they also have some downsides, such as taking up additional storage space and requiring extra maintenance during database updates. It's important to carefully consider which columns to index and how to index them to optimize query performance without incurring unnecessary overhead.
+
+**Example**
+Sure, here is an example of creating an index in MongoDB:
+
+Let's say we have a collection named "users" with the following documents:
+
+```js
+{
+   "name": "John",
+   "age": 25,
+   "city": "New York"
+}
+{
+   "name": "Jane",
+   "age": 30,
+   "city": "London"
+}
+{
+   "name": "Bob",
+   "age": 22,
+   "city": "Paris"
+}
+```
+
+We can create an index on the "age" field using the `createIndex()` method like this:
+
+```js
+db.users.createIndex({ age: 1 });
+```
+
+This will create an ascending index on the "age" field. Now, if we run a query that uses the "age" field, MongoDB can use the index to quickly find the relevant documents.
+
+For example, if we want to find all the users with an age greater than or equal to 25, we can use the following query:
+
+```js
+db.users.find({ age: { $gte: 25 } });
+```
+
+Since we have created an index on the "age" field, MongoDB can use it to quickly find the relevant documents without having to scan the entire collection.
+
+##### 3.What is aggregation in MongoDB?
+
+In MongoDB, aggregation refers to the process of performing a set of operations on the collection of documents in order to get the desired results. It involves the processing of data records and returning computed results. MongoDB's aggregation framework provides a variety of operators, functions, and stages that can be used to perform complex queries and calculations.
+
+Aggregation in MongoDB is similar to SQL's GROUP BY clause, but it's more flexible and powerful. It can be used to perform various operations such as filtering, grouping, sorting, and transforming data. Some examples of operations that can be performed using the MongoDB aggregation framework include calculating the average value of a field, grouping data by a specific field, and sorting data based on multiple fields.
+
+The MongoDB aggregation pipeline consists of a series of stages that can be used to perform complex queries and data processing. The pipeline stages can be combined in various ways to perform a variety of operations. The pipeline stages include operations such as filtering, grouping, projecting, sorting, and limiting data. Each stage takes the output of the previous stage and processes it further.
+
+Here is an example of using the aggregation pipeline to group data by a specific field and calculate the average value of another field:
+
+```js
+db.sales.aggregate([
+  {
+    $group: {
+      _id: "$product",
+      averageQuantity: { $avg: "$quantity" },
+    },
+  },
+]);
+```
+
+This will group the sales collection by the product field and calculate the average value of the quantity field for each product. The results will be returned as a set of documents, with each document containing the product and the average quantity for that product.
+
+##### 4.What is an embedded document in MongoDB?
+
+In MongoDB, an embedded document refers to a document that is embedded within another document. This means that the data is stored in a nested structure instead of being stored in separate collections. An embedded document can be seen as a sub-document of a larger document.
+
+For example, consider a collection of books where each book has an author and a list of reviews. Instead of having a separate collection for authors and reviews, you could embed them within the book document itself. The author information would be stored as a sub-document within the book document, and the reviews would be stored as an array of sub-documents within the book document.
+
+Embedding documents can help to simplify the data model and improve performance, as it eliminates the need for costly join operations. However, it can also make it more difficult to update data, as updates to embedded documents require updating the entire parent document.
+
+##### 5.What is the data type of \_id in MongoDB?
+
+In MongoDB, the `_id` field is a unique identifier for each document in a collection. The data type of `_id` is usually an `ObjectId`, which is a 12-byte BSON type that is generated by MongoDB when a document is inserted into a collection. However, it is also possible to use other data types for `_id`, such as a string, integer, or UUID. The important thing is that `_id` must be unique within the collection to ensure the integrity of the data.
+
+##### 6.What is Projection in MongoDB?
+
+In MongoDB, projection is a feature that allows the user to specify or restrict the fields to be returned in the query results. It can be used to limit the amount of data retrieved from a database, especially when working with large datasets.
+
+When querying a MongoDB database, projection can be achieved by using the `find()` method and passing a projection object as the second parameter. The projection object can contain either 1s or 0s for each field, where 1 specifies that the field should be included in the results and 0 specifies that it should be excluded.
+
+For example, the following code retrieves only the `_id` and `name` fields from a collection called `users`:
+
+```js
+db.users.find({}, { _id: 1, name: 1 });
+```
+
+In this example, the first parameter `{}` specifies that all documents should be returned, while the second parameter `{ _id: 1, name: 1 }` specifies that only the `_id` and `name` fields should be included in the results.
+
+Projection can also be used to return nested fields or arrays using dot notation. For example, to retrieve only the `name` and `address.city` fields from a collection called `users`, the following code can be used:
+
+```js
+db.users.find({}, { name: 1, "address.city": 1 });
+```
+
+This will return only the `name` and `city` fields from the `users` collection.
+
+##### 7.How would you perform partial text search in MongoDB?
+
+To perform partial text search in MongoDB, we can use the `$regex` operator along with the `$options` modifier. Here's an example:
+
+Suppose we have a collection named `products` with the following documents:
+
+```js
+{ "_id": 1, "name": "iPhone 12", "description": "The latest iPhone from Apple" }
+{ "_id": 2, "name": "Samsung Galaxy S21", "description": "The latest Android phone from Samsung" }
+{ "_id": 3, "name": "Google Pixel 5", "description": "The latest Pixel phone from Google" }
+```
+
+Now, to perform partial text search on the `name` field for the term "phone", we can use the following query:
+
+```js
+db.products.find({ name: { $regex: "phone", $options: "i" } });
+```
+
+In this query, `$regex` operator is used to perform a regular expression search on the `name` field, and `$options` modifier is used to set the case-insensitive flag 'i'. This query will return all documents that have the term "phone" in their `name` field, regardless of the case.
+
+Note that partial text search using regular expressions can be slow on large datasets, and there are more efficient ways to perform text search in MongoDB, such as text indexes and text search operators.
+
+##### 8.What are stored procedures in MongoDB?
+
+MongoDB is a NoSQL database and does not have stored procedures in the traditional sense like SQL databases such as MySQL or PostgreSQL. Instead, MongoDB offers server-side functions, which can be thought of as a similar concept.
+
+MongoDB's server-side functions allow you to execute custom JavaScript functions on the server side. These functions can be used to perform complex computations or to implement custom business logic.
+
+You can create server-side functions in MongoDB by defining a JavaScript function and registering it with the database. Once a function is registered, you can call it from your application using the `db.eval()` method.
+
+For example, the following code defines a server-side function that calculates the average price of all products in a collection:
+
+```js
+db.system.js.save({
+  _id: "averagePrice",
+  value: function () {
+    var result = db.products.aggregate([
+      { $group: { _id: null, avgPrice: { $avg: "$price" } } },
+    ]);
+    return result.toArray()[0].avgPrice;
+  },
+});
+```
+
+Once the function is defined, you can call it from your application as follows:
+
+```js
+db.eval("averagePrice()");
+```
+
+Note that using `db.eval()` can have performance implications, and MongoDB recommends using server-side functions only when necessary.

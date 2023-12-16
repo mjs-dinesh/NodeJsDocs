@@ -1,0 +1,37 @@
+### Child Process
+
+##### 1.Explain the child process?
+
+In Node.js, a child process is a separate instance of a computer program that runs concurrently with the parent process. The child process runs independently of the parent process, and it is often used to perform tasks that are too heavy or time-consuming for the parent process to handle efficiently.
+
+The child process module in Node.js allows you to create new processes, communicate with them through stdin, stdout, and stderr streams, and listen for exit events. You can create a child process using the spawn() method, which takes the name of the executable command and an array of arguments as parameters.
+
+Here's an example of how to use the child process module to spawn a child process:
+
+```js
+const { spawn } = require("child_process");
+
+const ls = spawn("ls", ["-lh", "/usr"]);
+
+ls.stdout.on("data", (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on("data", (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+ls.on("close", (code) => {
+  console.log(`child process exited with code ${code}`);
+});
+```
+
+In this example, the `spawn()` method is used to create a child process that runs the `ls` command with the `-lh /usr` arguments. The `stdout`, `stderr`, and `close` events are used to capture the output and status of the child process.
+
+##### 2.What is a child process in Node.js? How is it different from a cluster?
+
+In Node.js, a child process is a subprocess that is spawned by the main or parent process. It is a separate instance of the V8 engine that runs in a new instance of the operating system process. This allows the parent process to execute multiple tasks in parallel, without blocking the event loop.
+
+On the other hand, the cluster module in Node.js is used to create child processes that are forked from the main process. These child processes are designed to share the same server ports, allowing them to handle incoming requests in parallel. The cluster module is typically used for scaling Node.js applications across multiple CPU cores or servers.
+
+In summary, the main difference between a child process and a cluster in Node.js is that a child process is a separate instance of the V8 engine that is spawned by the parent process, whereas a cluster is a group of child processes that are created to handle incoming requests in parallel.

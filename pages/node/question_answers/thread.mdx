@@ -1,0 +1,37 @@
+### Thread
+
+**InterviewBit**
+
+##### 1.What is a thread pool and which library handles it in Node.js
+
+The Thread pool is handled by the libuv library. libuv is a multi-platform C library that provides support for asynchronous I/O-based operations such as file systems, networking, and concurrency.
+
+##### 2. How are worker threads different from clusters?
+
+**Cluster:**
+
+There is one process on each CPU with an IPC to communicate.
+
+In case we want to have multiple servers accepting HTTP requests via a single port, clusters can be helpful.
+
+The processes are spawned in each CPU thus will have separate memory and node instance which further will lead to memory issues.
+
+**Worker threads:**
+
+There is only one process in total with multiple threads.
+
+Each thread has one Node instance (one event loop, one JS engine) with most of the APIs accessible.
+
+Shares memory with other threads (e.g. SharedArrayBuffer)
+
+This can be used for CPU-intensive tasks like processing data or accessing the file system since NodeJS is single-threaded, synchronous tasks can be made more efficient leveraging the worker's threads.
+
+##### 3.What is the threading model of Node.js? Is Node.js single threaded or does it support multi-threading? Can you explain the event-driven architecture of Node.js and how it helps in handling multiple requests efficiently?
+
+Node.js uses a single-threaded event-driven model, which means that it runs on a single thread but can handle multiple requests asynchronously without blocking the event loop. This single-threaded model is one of the key features of Node.js and provides significant performance benefits by avoiding the overhead of context switching between threads.
+
+The event-driven architecture of Node.js is based on a set of core APIs that enable asynchronous I/O operations, such as file system operations, network I/O, and timers. These APIs use a non-blocking I/O model, which means that the program can execute other tasks while waiting for I/O operations to complete.
+
+The event loop is a key component of the Node.js architecture, and it is responsible for managing the flow of events in the system. The event loop continuously monitors the event queue and executes the callbacks associated with each event. When an event is triggered, such as the completion of an I/O operation, a new event is added to the event queue, and the event loop continues to process events in a first-in, first-out (FIFO) order.
+
+In summary, Node.js uses a single-threaded, event-driven architecture that allows it to handle multiple requests efficiently without blocking the event loop. This architecture provides significant performance benefits and makes Node.js ideal for building high-performance, scalable applications that can handle a large number of concurrent connections.

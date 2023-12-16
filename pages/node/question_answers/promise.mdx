@@ -1,0 +1,378 @@
+### Promise
+
+In Node.js, a Promise is an object representing the eventual completion or failure of an asynchronous operation. It is a way to handle asynchronous operations in a more structured and intuitive way, allowing you to write code that reads like synchronous code, but still runs asynchronously.
+
+A Promise has three states:
+
+1. Pending: The initial state of a Promise before it has completed or failed.
+2. Fulfilled: The state of a Promise when it has successfully completed.
+3. Rejected: The state of a Promise when it has failed.
+
+A Promise object has a `then()` method, which takes two arguments, a callback function for the success case and another callback function for the error case. When a Promise is fulfilled, the success callback is called with the result of the operation. If the Promise is rejected, the error callback is called with the reason for the rejection.
+
+Promises can also be chained together using the `then()` method, allowing for more complex asynchronous operations to be performed in a sequence. Additionally, Promise objects can be passed to functions that accept Promises, allowing for greater flexibility in how asynchronous code is written and executed.
+
+```js
+const promise = (isResolve) => {
+  return new Promise((resolve, reject) => {
+    if (isResolve) {
+      setTimeout(() => {
+        resolve("Success");
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        reject("Error");
+      }, 2000);
+    }
+  });
+};
+
+const promiseResult = async () => {
+  await promise(true)
+    .then((res) => console.log({ res }))
+    .catch((err) => console.log(err));
+  await promise(false)
+    .then((res) => console.log({ res }))
+    .catch((err) => console.log({ err }));
+};
+
+promiseResult();
+```
+
+##### 1.Can you explain what Promises are in JavaScript and provide an example of making nested Promises?
+
+Promises in JavaScript are a way to handle asynchronous operations. They are objects that represent a value that may not be available yet but will be resolved in the future, either successfully or unsuccessfully. Promises have three states: pending, fulfilled, and rejected.
+
+Here is an example of making nested Promises:
+
+```js
+let promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Promise 1 resolved");
+  }, 1000);
+});
+
+let promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Promise 2 resolved");
+  }, 2000);
+});
+
+let promise3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("Promise 3 resolved");
+  }, 3000);
+});
+
+promise1
+  .then((result1) => {
+    console.log(result1);
+    return promise2;
+  })
+  .then((result2) => {
+    console.log(result2);
+    return promise3;
+  })
+  .then((result3) => {
+    console.log(result3);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In this example, we create three Promises `promise1`, `promise2`, and `promise3` that resolve after 1, 2, and 3 seconds respectively. We then chain the Promises using the `then()` method. The first `then()` block logs the result of `promise1` and returns `promise2`. The second `then()` block logs the result of `promise2` and returns `promise3`. The third `then()` block logs the result of `promise3`. The `catch()` block handles any errors that occur during the Promise chain.
+
+This example demonstrates how Promises can be used to handle asynchronous operations in a sequential manner.
+
+##### 2.How can you avoid using nested Promises in JavaScript?
+
+To avoid using nested Promises in JavaScript, we can use Promise chaining. Promise chaining allows us to write more readable and maintainable code by avoiding the nesting of Promises.
+
+Here is an example:
+
+```js
+function getUser(id) {
+  return new Promise((resolve, reject) => {
+    // Fetch user data from database using the provided id
+    let user = { id: id, name: "John Doe" };
+    resolve(user);
+  });
+}
+
+function getUserPosts(user) {
+  return new Promise((resolve, reject) => {
+    // Fetch user's posts from database using the user object
+    let posts = [
+      { id: 1, title: "Post 1" },
+      { id: 2, title: "Post 2" },
+    ];
+    resolve(posts);
+  });
+}
+
+function getPostComments(post) {
+  return new Promise((resolve, reject) => {
+    // Fetch comments for the post using the post object
+    let comments = [
+      { id: 1, text: "Comment 1" },
+      { id: 2, text: "Comment 2" },
+    ];
+    resolve(comments);
+  });
+}
+
+// Promise chaining example
+getUser(1)
+  .then((user) => getUserPosts(user))
+  .then((posts) => getPostComments(posts[0]))
+  .then((comments) => console.log(comments))
+  .catch((error) => console.log(error));
+```
+
+In this example, we chain the Promises returned by each function using the `.then()` method, rather than nesting them. This makes the code more readable and easier to maintain.
+
+##### 3.What do you know about Promise.all?
+
+`Promise.all()` is a method in JavaScript that takes an array of promises and returns a single promise that resolves when all the promises in the input array have resolved. It is often used in situations where multiple asynchronous operations need to be performed simultaneously and their results need to be combined.
+
+`Promise.all()` returns a new promise that will resolve with an array of results from all the input promises, in the order in which they were provided as input. If any of the input promises rejects, then the returned promise will immediately reject with the reason of the first promise that rejected.
+
+Here is an example of using `Promise.all()` to fetch data from two different APIs simultaneously and then combining their results:
+
+```js
+const fetch = require("node-fetch");
+
+const getCombinedData = async () => {
+  const [api1Response, api2Response] = await Promise.all([
+    fetch("https://api1.com/data"),
+    fetch("https://api2.com/data"),
+  ]);
+
+  const api1Data = await api1Response.json();
+  const api2Data = await api2Response.json();
+
+  return { ...api1Data, ...api2Data };
+};
+
+getCombinedData()
+  .then((data) => console.log(data))
+  .catch((error) => console.error(error));
+```
+
+In the example above, `Promise.all()` is used to fetch data from two different APIs, and then their results are combined into a single object using the spread operator. The `await` keyword is used to wait for the promises to resolve before proceeding with the next step.
+
+##### 4.If we have multiple promises, how can we ensure that they are all settled before further processing?
+
+We can use `Promise.all()` to ensure that multiple promises are settled before further processing. The `Promise.all()` method takes an array of promises and returns a new promise that resolves when all the promises in the array have resolved or rejects with the reason of the first promise that rejects.
+
+Here's an example of using `Promise.all()`:
+
+```javascript
+const promise1 = Promise.resolve("Resolved Promise 1");
+const promise2 = Promise.resolve("Resolved Promise 2");
+const promise3 = Promise.resolve("Resolved Promise 3");
+
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results);
+    // Output: ['Resolved Promise 1', 'Resolved Promise 2', 'Resolved Promise 3']
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In this example, we create three promises that resolve with different values. We pass an array of these promises to `Promise.all()`, which returns a new promise that resolves with an array of the resolved values of each promise. If any promise in the array rejects, the `catch()` block will be executed with the reason of the first promise that rejects.
+
+##### 5.Can you explain the concept of promises in JavaScript, and provide a code snippet example?
+
+Promises in JavaScript are a way of handling asynchronous operations. A promise represents a value that may not be available yet, but will be resolved eventually, either successfully or unsuccessfully. Promises can be used to handle asynchronous operations in a more readable and maintainable way than using callbacks.
+
+Here is an example of using a promise to load an image:
+
+```javascript
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve(img);
+    };
+    img.onerror = () => {
+      reject(`Failed to load image at URL: ${url}`);
+    };
+    img.src = url;
+  });
+}
+
+loadImage("https://example.com/image.png")
+  .then((img) => {
+    console.log(`Image width: ${img.width}, height: ${img.height}`);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In this example, the `loadImage` function returns a promise. The promise is constructed with a function that takes two arguments, `resolve` and `reject`. When the image loads successfully, the `onload` event is triggered and the `resolve` function is called with the loaded image as an argument. If an error occurs while loading the image, the `onerror` event is triggered and the `reject` function is called with an error message.
+
+The `loadImage` function is called with a URL as an argument. The `then` method is called on the returned promise to handle the successful resolution of the promise. The `catch` method is called to handle any errors that occur while loading the image.
+
+##### 6.What are Promises in JavaScript? Why use them?
+
+Promises in JavaScript are a way to handle asynchronous operations. They allow you to chain multiple asynchronous operations together and handle errors in a cleaner way than using callbacks.
+
+When a Promise is created, it is in a "pending" state. Once the Promise is resolved (successfully) or rejected (with an error), it enters a "settled" state. Promises are resolved with a value or rejected with an error.
+
+One of the biggest advantages of using Promises is that they help avoid "callback hell" - a situation where nested callbacks can become hard to read and debug. Promises allow you to write asynchronous code in a more synchronous-like manner, making it easier to reason about and debug.
+
+Here's an example code snippet that demonstrates how to create a Promise:
+
+```js
+function fetchUserData() {
+  return new Promise((resolve, reject) => {
+    // make a request to fetch user data
+    // when the data is available, call resolve(data)
+    // if there was an error, call reject(error)
+  });
+}
+
+fetchUserData()
+  .then((data) => {
+    // handle the data
+  })
+  .catch((error) => {
+    // handle the error
+  });
+```
+
+In this example, the `fetchUserData` function returns a new Promise. Inside the Promise, a request is made to fetch user data. If the request is successful, the Promise is resolved with the data. If there is an error, the Promise is rejected with the error.
+
+The `then` method is used to handle the resolved value, and the `catch` method is used to handle any errors that occurred during the operation.
+
+##### 7.Can you provide a code example for an async request handled with promises?
+
+Sure! Here's an example of an asynchronous HTTP request using promises in JavaScript:
+
+```javascript
+const axios = require("axios");
+
+// Function to make an HTTP request and return a Promise
+function makeRequest(url) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(url)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+// Usage
+makeRequest("https://jsonplaceholder.typicode.com/posts/1")
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+In this example, the `makeRequest` function takes a URL and returns a Promise. It uses the `axios` library to make an HTTP request and resolves or rejects the Promise based on the result of the request.
+
+To use the `makeRequest` function, you can call it with a URL and chain a `.then` method to handle the resolved Promise, or a `.catch` method to handle the rejected Promise.
+
+##### 8.What is the difference between callbacks and promises?
+
+Callbacks and promises are two ways to handle asynchronous operations in JavaScript.
+
+A callback is a function that is passed as an argument to another function and is called when the operation is complete. Callbacks can make the code harder to read and understand, and they can lead to callback hell (when you have multiple nested callbacks that make the code difficult to maintain).
+
+Promises provide a way to handle asynchronous operations in a more readable and manageable way. A promise is an object that represents the eventual completion (or failure) of an asynchronous operation and allows you to attach callbacks to handle the result. Promises can be chained, allowing you to write cleaner and more modular code.
+
+Here's an example of a callback-based approach and a promise-based approach to making an HTTP request:
+
+Callback-based approach:
+
+```js
+const https = require("https");
+
+https
+  .get("https://www.example.com", (res) => {
+    let data = "";
+
+    res.on("data", (chunk) => {
+      data += chunk;
+    });
+
+    res.on("end", () => {
+      console.log(data);
+    });
+  })
+  .on("error", (err) => {
+    console.error(err);
+  });
+```
+
+Promise-based approach:
+
+```js
+const https = require("https");
+
+const getData = () => {
+  return new Promise((resolve, reject) => {
+    https
+      .get("https://www.example.com", (res) => {
+        let data = "";
+
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        res.on("end", () => {
+          resolve(data);
+        });
+      })
+      .on("error", (err) => {
+        reject(err);
+      });
+  });
+};
+
+getData()
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+```
+
+As you can see, the promise-based approach is more readable and easier to understand, especially when dealing with complex asynchronous operations.
+
+##### 9.What is Promise in Javascript? How to execute promises in parallel?
+
+A Promise in JavaScript is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value. Promises provide a way to handle asynchronous operations more easily and in a more readable way, avoiding "callback hell".
+
+To execute Promises in parallel, you can use `Promise.all()` method, which takes an array of Promises and returns a Promise that resolves to an array of the results when all Promises have resolved, or rejects if any Promise in the array rejects.
+
+Here is an example code snippet to execute Promises in parallel using `Promise.all()`:
+
+```javascript
+const promise1 = Promise.resolve("Result 1");
+const promise2 = Promise.resolve("Result 2");
+const promise3 = Promise.resolve("Result 3");
+
+Promise.all([promise1, promise2, promise3])
+  .then((results) => {
+    console.log(results); // ["Result 1", "Result 2", "Result 3"]
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In this example, three Promises (`promise1`, `promise2`, and `promise3`) are created using `Promise.resolve()`. Then, `Promise.all()` is called with an array of those Promises. The `then()` method is used to log the results when all Promises are resolved, and the `catch()` method is used to handle any errors that might occur during the execution of the Promises. When `Promise.all()` resolves, it returns an array of the results in the same order as the input Promises.

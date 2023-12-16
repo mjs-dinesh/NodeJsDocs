@@ -1,0 +1,81 @@
+### Security
+
+##### 1.What is an XSS (Cross-site scripting) attack and how does it work?
+
+Cross-site scripting (XSS) is a type of web security vulnerability that allows an attacker to inject malicious code into a web page viewed by other users. The attack works by exploiting the trust that a user has in a particular website. An attacker can inject malicious code, usually in the form of JavaScript, into a website's input fields or into its URLs.
+
+When the website is loaded by another user, the malicious code executes in their browser, giving the attacker access to the victim's session data and allowing them to steal sensitive information, like passwords, credit card details, or personal information.
+
+XSS attacks can be categorized into two types: stored and reflected. In stored XSS attacks, the malicious code is stored on the server, and every user who accesses the page with the malicious code will be affected. In reflected XSS attacks, the malicious code is reflected off the server and sent to the user in response to their input, like search queries or form submissions.
+
+To protect against XSS attacks, web developers can implement a variety of security measures, including input validation and sanitization, output encoding, and the use of HTTP-only cookies.
+
+##### 2.What is SQL injection and how can it be prevented?
+
+SQL injection is a type of security vulnerability that occurs when an attacker injects malicious code into an SQL statement. The attacker can then manipulate the SQL query to perform unauthorized actions, such as viewing or modifying sensitive data, or even deleting entire databases.
+
+SQL injection attacks occur when user input is not properly sanitized or validated before being used in an SQL query. Attackers can exploit this vulnerability by injecting SQL commands into the input fields of a web form or URL parameters, tricking the application into executing these commands.
+
+To prevent SQL injection, it is important to use parameterized queries or prepared statements instead of directly concatenating user input into SQL statements. This ensures that user input is treated as a parameter rather than as part of the SQL command, making it much more difficult for attackers to inject malicious code. It is also important to properly sanitize and validate user input before using it in SQL queries.
+
+##### 3.What are the different security parameters to keep in mind when writing a REST API?
+
+When writing a REST API, there are several security parameters to keep in mind to ensure the security of the application and its users. Some of the important ones are:
+
+1. Authentication: It is the process of verifying the identity of a user. The API should use a secure authentication mechanism like OAuth 2.0, JSON Web Tokens (JWT), or Basic Authentication to ensure that only authorized users can access the API.
+
+2. Authorization: It is the process of verifying whether a user has the required permissions to perform a specific action. The API should have proper authorization checks in place to ensure that users can only access the resources they are authorized to access.
+
+3. Input validation: The API should validate all input data to prevent malicious data from being processed. This includes validating data types, length, and format.
+
+4. Rate limiting: The API should limit the number of requests that can be made by a single user within a specific time period to prevent Denial of Service (DoS) attacks.
+
+5. Error handling: The API should handle errors gracefully and not reveal any sensitive information in error messages.
+
+6. SSL/TLS encryption: The API should use SSL/TLS encryption to protect data in transit from eavesdropping and tampering.
+
+7. API versioning: The API should be versioned to ensure backward compatibility and avoid security vulnerabilities that may arise from outdated code.
+
+8. Logging and monitoring: The API should log all requests and responses to detect any suspicious activities and have proper monitoring in place to detect and respond to any security threats in real-time.
+
+By following these security parameters, developers can ensure that their REST API is secure and can protect user data from unauthorized access and malicious attacks.
+
+##### 4.What is a Cross-Origin Request and how can it be handled?
+
+A Cross-Origin Request (CORS) is a request made by a client from one domain to a server on a different domain. By default, web browsers restrict such requests due to security reasons, as they could potentially lead to a cross-site request forgery (CSRF) attack.
+
+To handle CORS, the server needs to include specific response headers in its HTTP response. These headers indicate whether the requested resource is allowed to be accessed by the requesting domain.
+
+The most common headers used to handle CORS are:
+
+1. Access-Control-Allow-Origin: This header specifies the domains that are allowed to access the requested resource. If the header is set to "\*", any domain is allowed to access the resource.
+
+2. Access-Control-Allow-Methods: This header specifies the HTTP methods that are allowed for the requested resource.
+
+3. Access-Control-Allow-Headers: This header specifies the custom headers that are allowed for the requested resource.
+
+4. Access-Control-Allow-Credentials: This header specifies whether the client is allowed to include cookies in the request.
+
+To handle CORS in a Node.js application, you can use the cors middleware package, which allows you to set these headers automatically. For example:
+
+```js
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+// Set up CORS middleware
+app.use(cors());
+
+// Define your routes
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
+});
+```
+
+With this setup, any client can access the "/" route of your server from any domain.
