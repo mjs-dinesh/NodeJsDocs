@@ -1,0 +1,70 @@
+### Differentiate between map and forEach.
+
+`map` and `forEach` are both methods in JavaScript that are used to iterate over elements in an array, but they have different purposes and behaviors.
+
+### `forEach()` Method:
+
+- **Purpose:**
+
+  - `forEach()` is used to iterate over each element of an array and execute a provided function for each element. It does not create a new array.
+
+- **Syntax:**
+
+  ```javascript
+  array.forEach(callback(currentValue, index, array), thisArg);
+  ```
+
+  - `callback`: Function to execute for each element.
+  - `currentValue`: The current element being processed in the array.
+  - `index`: The index of the current element being processed.
+  - `array`: The array on which `forEach` was called.
+  - `thisArg` (optional): Object to use as `this` when executing the callback.
+
+- **Example:**
+
+  ```javascript
+  const numbers = [1, 2, 3, 4, 5];
+  numbers.forEach((num, index) => {
+    console.log(`Element at index ${index}: ${num}`);
+  });
+  ```
+
+- **Note:**
+  - `forEach()` does not return a new array. It is mainly used for executing a function for each element in the array.
+
+### `map()` Method:
+
+- **Purpose:**
+
+  - `map()` is used to iterate over each element of an array and create a new array by applying a provided function to each element.
+
+- **Syntax:**
+
+  ```javascript
+  const newArray = array.map(callback(currentValue, index, array), thisArg);
+  ```
+
+  - `callback`: Function to execute for each element.
+  - `currentValue`: The current element being processed in the array.
+  - `index`: The index of the current element being processed.
+  - `array`: The array on which `map` was called.
+  - `thisArg` (optional): Object to use as `this` when executing the callback.
+
+- **Example:**
+
+  ```javascript
+  const numbers = [1, 2, 3, 4, 5];
+  const squaredNumbers = numbers.map((num) => num * num);
+  console.log(squaredNumbers); // Output: [1, 4, 9, 16, 25]
+  ```
+
+- **Note:**
+  - `map()` creates a new array by applying the provided function to each element. It does not modify the original array.
+
+### Summary:
+
+- `forEach()` is used for iterating over elements and executing a function for each element. It does not create a new array.
+
+- `map()` is used for iterating over elements, applying a function to each element, and creating a new array based on the results. It does not modify the original array.
+
+In general, if you need to perform an operation for each element and do not need a new array as a result, `forEach()` is suitable. If you want to transform each element and create a new array based on the transformations, `map()` is more appropriate.

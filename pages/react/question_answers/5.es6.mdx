@@ -1,0 +1,135 @@
+ES6, or ECMAScript 2015, is a major update to the JavaScript language that brought many new features and improvements. Here are some key features introduced in ES6:
+
+1. **Arrow Functions:**
+
+   - Arrow functions provide a concise syntax for writing function expressions. They have a shorter syntax compared to traditional function expressions and do not bind their own `this`, `arguments`, `super`, or `new.target`.
+
+   ```javascript
+   // Traditional function expression
+   const add = function (a, b) {
+     return a + b;
+   };
+
+   // Arrow function
+   const add = (a, b) => a + b;
+   ```
+
+2. **let and const:**
+
+   - `let` and `const` are block-scoped variable declarations. `let` allows reassignment, while `const` creates variables whose values cannot be reassigned.
+
+   ```javascript
+   let variable1 = "Mutable";
+   const constant1 = "Immutable";
+   ```
+
+3. **Template Literals:**
+
+   - Template literals allow embedding expressions inside string literals, making it easier to create dynamic strings.
+
+   ```javascript
+   const name = "John";
+   const greeting = `Hello, ${name}!`;
+   ```
+
+4. **Destructuring Assignment:**
+
+   - Destructuring enables extracting values from arrays or objects into distinct variables, providing a concise way to work with complex data structures.
+
+   ```javascript
+   // Array destructuring
+   const [first, second] = [1, 2];
+
+   // Object destructuring
+   const { name, age } = { name: "John", age: 30 };
+   ```
+
+5. **Default Parameters:**
+
+   - Default parameter values allow defining default values for function parameters if they are not explicitly provided.
+
+   ```javascript
+   function greet(name = "Guest") {
+     console.log(`Hello, ${name}!`);
+   }
+   ```
+
+6. **Spread and Rest Operators:**
+
+   - The spread operator (`...`) is used to spread elements of an array or properties of an object. The rest operator is used to collect the remaining arguments into a single array parameter.
+
+   ```javascript
+   // Spread operator
+   const array1 = [1, 2, 3];
+   const array2 = [...array1, 4, 5];
+
+   // Rest operator
+   function sum(...numbers) {
+     return numbers.reduce((acc, num) => acc + num, 0);
+   }
+   ```
+
+7. **Classes:**
+
+   - ES6 introduced a class syntax for creating constructor functions and defining methods. It provides a more structured and familiar way to implement object-oriented programming in JavaScript.
+
+   ```javascript
+   class Person {
+     constructor(name, age) {
+       this.name = name;
+       this.age = age;
+     }
+
+     greet() {
+       console.log(`Hello, my name is ${this.name}`);
+     }
+   }
+   ```
+
+8. **Promises:**
+
+   - Promises provide a cleaner way to work with asynchronous code compared to callbacks. They represent the eventual completion or failure of an asynchronous operation.
+
+   ```javascript
+   const fetchData = () => {
+     return new Promise((resolve, reject) => {
+       // Asynchronous logic
+       if (success) {
+         resolve(data);
+       } else {
+         reject(error);
+       }
+     });
+   };
+   ```
+
+9. **Modules:**
+
+   - ES6 introduced a native module system, allowing developers to organize code into separate files and import/export functionality between them.
+
+   ```javascript
+   // Exporting module
+   export const myFunction = () => {
+     /* ... */
+   };
+
+   // Importing module
+   import { myFunction } from "./myModule";
+   ```
+
+10. **Symbol and Iterators:**
+
+    - Symbols are unique, immutable values that can be used as property keys. Iterators provide a standardized way to iterate over data structures.
+
+    ```javascript
+    const mySymbol = Symbol("description");
+
+    const iterable = [1, 2, 3];
+    const iterator = iterable[Symbol.iterator]();
+
+    for (let item of iterable) {
+      console.log(item);
+    }
+    ```
+
+These features, along with others introduced in ES6, significantly enhance the expressiveness, readability, and maintainability of JavaScript code. They have become fundamental tools for modern JavaScript development.

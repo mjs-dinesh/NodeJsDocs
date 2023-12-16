@@ -1,0 +1,103 @@
+### Explain the types of components in React.
+
+In React, components are the building blocks of a user interface, and they can be categorized into three main types:
+
+1. **Functional Components:**
+
+   - Functional components are also known as stateless or dumb components. They are simple, lightweight functions that take props as arguments and return React elements. Functional components are primarily used for rendering UI based on the provided props.
+
+   ```jsx
+   // Example of a functional component
+   const Greeting = (props) => {
+     return <h1>Hello, {props.name}!</h1>;
+   };
+   ```
+
+   - With the introduction of React Hooks, functional components can also manage state and have lifecycle-like features through hooks like `useState` and `useEffect`.
+
+   ```jsx
+   import React, { useState, useEffect } from "react";
+
+   const Counter = () => {
+     const [count, setCount] = useState(0);
+
+     useEffect(() => {
+       document.title = `Count: ${count}`;
+     }, [count]);
+
+     return (
+       <div>
+         <p>Count: {count}</p>
+         <button onClick={() => setCount(count + 1)}>Increment</button>
+       </div>
+     );
+   };
+   ```
+
+2. **Class Components:**
+
+   - Class components are also known as stateful or smart components. They are ES6 classes that extend from `React.Component`. Class components have their own state, which can be modified, triggering a re-render of the component. They also have access to lifecycle methods.
+
+   ```jsx
+   // Example of a class component
+   import React, { Component } from "react";
+
+   class Counter extends Component {
+     constructor(props) {
+       super(props);
+       this.state = {
+         count: 0,
+       };
+     }
+
+     render() {
+       return (
+         <div>
+           <p>Count: {this.state.count}</p>
+           <button
+             onClick={() => this.setState({ count: this.state.count + 1 })}
+           >
+             Increment
+           </button>
+         </div>
+       );
+     }
+   }
+   ```
+
+   - Class components were the traditional way of writing components in React. However, with the introduction of hooks in React 16.8, functional components with hooks are now the preferred choice for many developers.
+
+3. **Pure Components:**
+
+   - Pure components are a performance optimization in React. They are class components that extend `React.PureComponent` instead of `React.Component`. A pure component performs a shallow comparison of its props and state before deciding whether to re-render. If the props and state have not changed, the component won't re-render, potentially saving resources.
+
+   ```jsx
+   // Example of a pure component
+   import React, { PureComponent } from "react";
+
+   class PureCounter extends PureComponent {
+     constructor(props) {
+       super(props);
+       this.state = {
+         count: 0,
+       };
+     }
+
+     render() {
+       return (
+         <div>
+           <p>Count: {this.state.count}</p>
+           <button
+             onClick={() => this.setState({ count: this.state.count + 1 })}
+           >
+             Increment
+           </button>
+         </div>
+       );
+     }
+   }
+   ```
+
+   - While pure components can provide performance benefits by avoiding unnecessary renders, it's essential to be mindful of their use, especially when dealing with complex state or props structures.
+
+In modern React development, functional components with hooks are often preferred due to their simplicity, readability, and the ability to handle state and lifecycle features. However, class components and pure components still have their use cases, particularly in existing codebases or situations where specific lifecycle methods are required.

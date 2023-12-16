@@ -1,0 +1,66 @@
+### What is connect in Redux ?
+
+In the context of Redux, `connect` is a function provided by the `react-redux` library. It is used to connect a React component to the Redux store, allowing the component to access state from the store and dispatch actions.
+
+The `connect` function is often used in conjunction with the `mapStateToProps` and `mapDispatchToProps` functions, which define how the component interacts with the Redux store.
+
+### `connect` Function Signature:
+
+The `connect` function has the following signature:
+
+```javascript
+connect(mapStateToProps?, mapDispatchToProps?, mergeProps?, options?)
+```
+
+- **`mapStateToProps` (optional):** A function that maps a portion of the Redux store state to the component's props. It takes the state as an argument and returns an object.
+
+- **`mapDispatchToProps` (optional):** A function or an object that maps action creators to the component's props. It allows the component to dispatch actions to the Redux store.
+
+- **`mergeProps` (optional):** A function that merges the props returned from `mapStateToProps`, `mapDispatchToProps`, and the component's own props.
+
+- **`options` (optional):** An object that allows customization of the behavior of the `connect` function.
+
+### Usage Example:
+
+Here's an example of how `connect` is typically used in a React component:
+
+```javascript
+import { connect } from "react-redux";
+import { increment, decrement } from "./actions";
+
+const Counter = ({ count, increment, decrement }) => {
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+};
+
+// mapStateToProps function
+const mapStateToProps = (state) => {
+  return {
+    count: state.counter.count,
+  };
+};
+
+// mapDispatchToProps object
+const mapDispatchToProps = {
+  increment,
+  decrement,
+};
+
+// Connecting the component to the Redux store
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+```
+
+In this example:
+
+- The `mapStateToProps` function maps the `count` property from the Redux store's `counter` slice to the `count` prop of the `Counter` component.
+
+- The `mapDispatchToProps` object maps the `increment` and `decrement` action creators to the `increment` and `decrement` props of the `Counter` component.
+
+- The `connect` function is used to create a new connected component, which has access to the Redux store based on the specified mappings.
+
+Now, the `Counter` component can access the Redux state and dispatch actions using the mapped props (`count`, `increment`, and `decrement`).
