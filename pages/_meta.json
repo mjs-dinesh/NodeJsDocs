@@ -1,18 +1,22 @@
 {
   "index": {
-    "title": "Home",
+    "title": "Welcome",
     "type": "page"
   },
-  "question_answers": {
-    "title": "Question and Answers",
+  "react": {
+    "title": "React",
     "type": "page"
   },
-  "problem_solving": {
-    "title": "Problem Solving",
+  "node": {
+    "title": "Node",
     "type": "page"
   },
-  "scenario_based_questions": {
-    "title": "Scenario Based Questions",
+  "nest": {
+    "title": "Nest",
+    "type": "page"
+  },
+  "java_script": {
+    "title": "Java Script",
     "type": "page"
   }
 }
