@@ -1,0 +1,60 @@
+### What is a callback function?
+
+In JavaScript, a callback function is a function that is passed as an argument to another function and is executed after the completion of some operation. The purpose of using callback functions is to ensure that a specific piece of code is executed only after a certain task has been completed, or in response to an event.
+
+Here are some key points about callback functions:
+
+1. **Passing Functions as Arguments:**
+
+   - In JavaScript, functions are first-class citizens, which means they can be treated like any other variable. This allows functions to be passed as arguments to other functions.
+
+2. **Asynchronous Operations:**
+
+   - Callback functions are commonly used in scenarios where operations are asynchronous, such as handling the result of a network request, reading a file, or responding to user interactions.
+
+3. **Event Handling:**
+
+   - Callbacks are frequently used in event handling. For example, you might pass a callback function to an event listener, and the function will be executed when the specified event occurs.
+
+4. **Error Handling:**
+   - Callbacks are also used for error handling in asynchronous operations. Typically, a callback will have two parameters: one for the result and another for an error if one occurs.
+
+### Example:
+
+```javascript
+// Synchronous Example
+function doSomething(callback) {
+  console.log("Doing something...");
+  callback(); // Execute the callback function
+}
+
+function onComplete() {
+  console.log("Operation completed!");
+}
+
+doSomething(onComplete);
+
+// Asynchronous Example (using setTimeout)
+function asyncOperation(callback) {
+  setTimeout(function () {
+    console.log("Async operation completed!");
+    callback(null, "Result of the async operation");
+  }, 2000);
+}
+
+function handleResult(error, result) {
+  if (error) {
+    console.error("Error:", error);
+  } else {
+    console.log("Result:", result);
+  }
+}
+
+asyncOperation(handleResult);
+```
+
+In the synchronous example, the `doSomething` function takes a callback function (`onComplete`) as an argument and executes it after performing some operation.
+
+In the asynchronous example, the `asyncOperation` function simulates an asynchronous task using `setTimeout` and then executes the callback function (`handleResult`) with the result of the operation.
+
+Callback functions play a significant role in enabling asynchronous programming and enhancing the flexibility of JavaScript. They are a fundamental concept in many JavaScript libraries, frameworks, and patterns, such as Node.js, AJAX requests, and event-driven programming.

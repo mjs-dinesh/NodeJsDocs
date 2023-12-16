@@ -1,0 +1,86 @@
+### In web development, what are the different HTTP status codes available between 200 and
+
+600, and what do they represent?
+
+HTTP status codes are three-digit numbers returned by a server in response to a client's request made to the server. These codes indicate the result of the request or provide information about the status of the server or the requested resource. HTTP status codes are grouped into different ranges, and the range from 200 to 599 is commonly used. Here's an overview of the HTTP status codes in this range:
+
+### 2xx Success
+
+1. **200 OK:**
+
+   - The request was successful, and the server has returned the requested data.
+   - Example: Successful retrieval of a web page.
+
+2. **201 Created:**
+
+   - The request was successful, and a new resource was successfully created as a result.
+   - Example: After submitting a form, a new record is created.
+
+3. **202 Accepted:**
+
+   - The request has been accepted for processing, but the processing is not complete.
+   - Example: Asynchronous operations where the result is not immediately available.
+
+4. **204 No Content:**
+   - The server successfully processed the request, but there is no additional content to send back.
+   - Example: Deleting a resource.
+
+### 3xx Redirection
+
+5. **301 Moved Permanently:**
+
+   - The requested resource has been permanently moved to a new location, and future requests should use the new URL.
+   - Example: URL redirection after a website restructuring.
+
+6. **302 Found (or Moved Temporarily):**
+
+   - The requested resource has been temporarily moved to a different location, and the original URL should still be used for future requests.
+   - Example: Temporary redirection.
+
+7. **304 Not Modified:**
+   - The client's cached copy of the resource is still valid, and the server does not need to send a new copy.
+   - Example: Used in conjunction with conditional GET requests.
+
+### 4xx Client Errors
+
+8. **400 Bad Request:**
+
+   - The server could not understand the request due to malformed syntax or invalid request message framing.
+   - Example: Malformed request parameters.
+
+9. **401 Unauthorized:**
+
+   - The request requires user authentication. The user must provide credentials to access the requested resource.
+   - Example: Accessing a protected API without authentication.
+
+10. **403 Forbidden:**
+
+    - The server understood the request, but it refuses to authorize it.
+    - Example: Accessing a resource for which the user does not have permission.
+
+11. **404 Not Found:**
+    - The requested resource could not be found on the server.
+    - Example: Accessing a URL that doesn't exist.
+
+### 5xx Server Errors
+
+12. **500 Internal Server Error:**
+
+    - A generic error message indicating that an unexpected condition has occurred on the server.
+    - Example: An unhandled exception occurred during the execution of a server-side script.
+
+13. **501 Not Implemented:**
+
+    - The server does not support the functionality required to fulfill the request.
+    - Example: Using an HTTP method that is not implemented on the server.
+
+14. **502 Bad Gateway:**
+
+    - The server, while acting as a gateway or proxy, received an invalid response from an upstream server.
+    - Example: Proxy server receiving an invalid response from the upstream server.
+
+15. **503 Service Unavailable:**
+    - The server is currently unable to handle the request due to temporary overloading or maintenance of the server.
+    - Example: Server overloaded and cannot handle additional requests at the moment.
+
+These are some of the commonly used HTTP status codes between 200 and 600, representing various outcomes of client-server interactions. The first digit of the status code indicates the general category of the response, while the following two digits provide more specific information.

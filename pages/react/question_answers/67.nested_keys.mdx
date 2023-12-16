@@ -1,0 +1,39 @@
+### How to print keys from a nested object in JavaScript?
+
+To print keys from a nested object in JavaScript, you can use a recursive approach to traverse the object and access its keys. Here's an example function that prints keys from a nested object:
+
+```javascript
+function printKeys(obj) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      console.log(key);
+
+      // Check if the value is an object and call the function recursively
+      if (typeof obj[key] === "object" && obj[key] !== null) {
+        printKeys(obj[key]);
+      }
+    }
+  }
+}
+
+// Example nested object
+const nestedObject = {
+  key1: "value1",
+  key2: {
+    key21: "value21",
+    key22: {
+      key221: "value221",
+      key222: "value222",
+    },
+    key23: "value23",
+  },
+  key3: "value3",
+};
+
+// Call the function with the nested object
+printKeys(nestedObject);
+```
+
+In this example, the `printKeys` function iterates through the keys of the object using a `for...in` loop. For each key, it prints the key and checks if the corresponding value is an object. If the value is an object, the function is called recursively to print keys from the nested object.
+
+Note: The `hasOwnProperty` check is used to make sure that only the object's own properties are considered, excluding any properties inherited from the prototype chain. Additionally, this example assumes that the nested object does not contain circular references to avoid infinite loops during traversal.

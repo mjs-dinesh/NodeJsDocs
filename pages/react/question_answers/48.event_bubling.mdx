@@ -1,0 +1,75 @@
+### What is meant by event bubbling in JavaScript, and how does it work in terms of the
+
+propagation of events from the child elements to their parent elements in the DOM
+hierarchy?
+
+Event bubbling is a phase in the event propagation model in JavaScript, where an event starts from the target element that triggered it and then bubbles up the DOM hierarchy, triggering event handlers on ancestor elements. During the event bubbling phase, the browser propagates the event from the target element to its parent elements.
+
+Here's how event bubbling works:
+
+1. **Event Triggering:**
+
+   - An event is triggered on a specific element, often as a result of user interaction (like a click, mouseover, or keypress).
+
+2. **Capturing Phase:**
+
+   - The event goes through the capturing phase (if event capturing is enabled). During this phase, the event travels down the DOM hierarchy from the root to the target element.
+
+3. **Target Phase:**
+
+   - The event reaches the target element, and the associated event handlers are executed.
+
+4. **Bubbling Phase:**
+
+   - The event enters the bubbling phase. It starts to bubble up from the target element to the root of the DOM hierarchy.
+
+5. **Event Handlers Execution:**
+   - Event handlers attached to the target element and its ancestors (up to the root) are triggered in sequence as the event bubbles up.
+
+### Example:
+
+Consider the following HTML structure:
+
+```html
+<div id="parent">
+  <button id="child">Click me</button>
+</div>
+```
+
+```javascript
+document.getElementById("parent").addEventListener("click", function () {
+  console.log("Parent Clicked");
+});
+
+document.getElementById("child").addEventListener("click", function () {
+  console.log("Child Clicked");
+});
+```
+
+If you click the "Click me" button in this example, you will see both "Child Clicked" and "Parent Clicked" logged to the console. This is because the click event starts at the target element (`<button>`), then bubbles up to its parent (`<div>`), and finally to the root of the document (`<html>`).
+
+### Controlling Event Flow:
+
+In JavaScript, you can control the event flow by using the `addEventListener` method and passing an optional third parameter, `useCapture`. When `useCapture` is set to `true`, the event follows the capturing phase (trickles down from the root to the target). When set to `false` or omitted, it follows the bubbling phase (bubbles up from the target to the root).
+
+```javascript
+document.getElementById("parent").addEventListener(
+  "click",
+  function () {
+    console.log("Parent Clicked (Bubbling Phase)");
+  },
+  false
+);
+
+document.getElementById("child").addEventListener(
+  "click",
+  function () {
+    console.log("Child Clicked (Bubbling Phase)");
+  },
+  false
+);
+```
+
+By default, the `useCapture` parameter is set to `false`, meaning the event follows the bubbling phase. In the example above, the result is the same as in the previous example.
+
+Understanding event bubbling is crucial when dealing with events in complex UIs. It allows you to capture events at higher levels of the DOM hierarchy, simplifying event handling and delegation. Event delegation involves attaching a single event listener to a common ancestor of multiple elements and using event bubbling to handle events for all those elements. This can improve performance and reduce the number of event listeners in your application.

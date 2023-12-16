@@ -1,0 +1,70 @@
+### Difference between Spread and Rest operator.
+
+The spread (`...`) and rest (`...`) operators in JavaScript are both denoted by the same syntax (`...`), but they are used in different contexts and serve different purposes. Let's explore the differences between the spread and rest operators:
+
+### Spread Operator (`...`):
+
+#### Purpose:
+
+The spread operator is used to split an iterable (like an array or string) into individual elements.
+
+#### Example (Array):
+
+```javascript
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];
+
+console.log(arr2); // Output: [1, 2, 3, 4, 5]
+```
+
+#### Example (Object):
+
+```javascript
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1, c: 3, d: 4 };
+
+console.log(obj2); // Output: { a: 1, b: 2, c: 3, d: 4 }
+```
+
+### Rest Operator (`...`):
+
+#### Purpose:
+
+The rest operator is used to collect multiple elements into a single variable. It is often used in function parameters to handle an arbitrary number of arguments.
+
+#### Example (Function Parameters):
+
+```javascript
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+
+console.log(sum(1, 2, 3, 4)); // Output: 10
+```
+
+#### Example (Destructuring):
+
+```javascript
+const [first, ...rest] = [1, 2, 3, 4, 5];
+
+console.log(first); // Output: 1
+console.log(rest); // Output: [2, 3, 4, 5]
+```
+
+### Key Differences:
+
+1. **Use Cases:**
+
+   - Spread: Used to spread elements (from arrays, objects, or strings) into a new context (e.g., array, object, or function arguments).
+   - Rest: Used to collect elements (function arguments or array elements) into a single variable.
+
+2. **Context:**
+
+   - Spread: Appears in the context where elements are being spread.
+   - Rest: Appears in the context where elements are being collected.
+
+3. **Syntax:**
+   - Spread: Used outside the context of a function parameter or array literal (e.g., `[...arr]`, `{...obj}`).
+   - Rest: Used within the context of a function parameter or array destructuring (e.g., `function sum(...numbers)`, `[first, ...rest]`).
+
+In summary, while the spread and rest operators share a similar syntax, they serve distinct purposes. The spread operator is used for spreading elements, while the rest operator is used for collecting elements. Understanding when and where to use each operator is essential for effective JavaScript programming.

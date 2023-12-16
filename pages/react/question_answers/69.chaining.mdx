@@ -1,0 +1,42 @@
+### What is chaining in JavaScript and how is it used to call multiple methods on an object in
+
+a single statement? Provide an example to illustrate your answer.
+
+Chaining in JavaScript refers to the practice of calling multiple methods on an object in a single statement. This is possible because many methods in JavaScript return the object they were called on, allowing for a chain of method calls one after the other.
+
+Here's an example to illustrate chaining:
+
+```javascript
+// Example object with chainable methods
+const person = {
+  firstName: "",
+  lastName: "",
+
+  setFirstName: function (firstName) {
+    this.firstName = firstName;
+    return this; // Return the object for chaining
+  },
+
+  setLastName: function (lastName) {
+    this.lastName = lastName;
+    return this; // Return the object for chaining
+  },
+
+  fullName: function () {
+    return this.firstName + " " + this.lastName;
+  },
+};
+
+// Using chaining to set values and get the full name in a single statement
+const fullName = person.setFirstName("John").setLastName("Doe").fullName();
+
+console.log(fullName); // Output: John Doe
+```
+
+In this example:
+
+1. The `setFirstName` method sets the `firstName` property of the `person` object and returns the object itself (`this`) to allow chaining.
+2. The `setLastName` method sets the `lastName` property and also returns the object for chaining.
+3. The `fullName` method returns the concatenated full name.
+
+By using chaining, you can perform multiple operations on the same object in a concise and readable manner. It's a common pattern in many JavaScript libraries and frameworks. However, not all methods support chaining, and it depends on whether the methods explicitly return the object for chaining.

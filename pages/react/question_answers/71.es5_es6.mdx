@@ -1,0 +1,168 @@
+### What are the differences between ES5 and ES6 methods in JavaScript?
+
+ES5 (ECMAScript 5) and ES6 (ECMAScript 2015, also known as ES6 or ES2015) are different versions of the ECMAScript standard, which is the specification that JavaScript is based on. ES6 introduced several new features and syntax enhancements compared to ES5. Here are some key differences between ES5 and ES6:
+
+### 1. **Variable Declarations:**
+
+**ES5:**
+
+```javascript
+var x = 10;
+```
+
+**ES6:**
+
+```javascript
+let x = 10;
+const y = 20;
+```
+
+- `let` and `const` were introduced in ES6 for block-scoped variable declarations.
+- `let` allows for reassignment, while `const` creates a constant variable.
+
+### 2. **Arrow Functions:**
+
+**ES5:**
+
+```javascript
+var add = function (a, b) {
+  return a + b;
+};
+```
+
+**ES6:**
+
+```javascript
+const add = (a, b) => a + b;
+```
+
+- Arrow functions provide a concise syntax for writing functions, with implicit return for one-line expressions.
+- They also inherit the `this` value from the surrounding scope.
+
+### 3. **Template Literals:**
+
+**ES5:**
+
+```javascript
+var name = "John";
+var message = "Hello, " + name + "!";
+```
+
+**ES6:**
+
+```javascript
+let name = "John";
+let message = `Hello, ${name}!`;
+```
+
+- Template literals allow the embedding of expressions inside string literals using `${}`.
+
+### 4. **Default Parameters:**
+
+**ES5:**
+
+```javascript
+function multiply(a, b) {
+  b = b || 2;
+  return a * b;
+}
+```
+
+**ES6:**
+
+```javascript
+function multiply(a, b = 2) {
+  return a * b;
+}
+```
+
+- ES6 allows the use of default parameter values directly in the function signature.
+
+### 5. **Destructuring Assignment:**
+
+**ES5:**
+
+```javascript
+var person = { name: "John", age: 30 };
+var name = person.name;
+var age = person.age;
+```
+
+**ES6:**
+
+```javascript
+const person = { name: "John", age: 30 };
+const { name, age } = person;
+```
+
+- Destructuring assignment allows for extracting values from objects and arrays more concisely.
+
+### 6. **Classes:**
+
+**ES5:**
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.sayHello = function () {
+  console.log("Hello, " + this.name + "!");
+};
+```
+
+**ES6:**
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  sayHello() {
+    console.log(`Hello, ${this.name}!`);
+  }
+}
+```
+
+- ES6 introduces a more concise and clear syntax for defining classes and their methods.
+
+### 7. **Promises:**
+
+**ES5:**
+
+```javascript
+function fetchData(callback) {
+  // Asynchronous operation
+  setTimeout(function () {
+    callback("Data received!");
+  }, 1000);
+}
+
+fetchData(function (result) {
+  console.log(result);
+});
+```
+
+**ES6:**
+
+```javascript
+function fetchData() {
+  return new Promise(function (resolve) {
+    // Asynchronous operation
+    setTimeout(function () {
+      resolve("Data received!");
+    }, 1000);
+  });
+}
+
+fetchData().then(function (result) {
+  console.log(result);
+});
+```
+
+- Promises provide a more structured way to handle asynchronous operations and avoid callback hell.
+
+These are just a few examples of the differences between ES5 and ES6. ES6 introduced many other features and improvements, making JavaScript code more expressive, readable, and easier to maintain. It's important to note that modern JavaScript development often utilizes ES6 and later versions to take advantage of these enhancements.
