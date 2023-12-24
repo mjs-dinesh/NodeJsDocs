@@ -8,11 +8,7 @@ export function Home() {
         color="red"
         href="/java_script/question_answers/data_types"
       />
-      <Card
-        title="React"
-        href="/react/question_answers/1.architecture"
-        color="red"
-      />
+      <Card title="React" href="/react/question_answers/react" color="red" />
       <Card title="Next" />
       <Card title="Node" />
       <Card title="MongoDB" />
@@ -26,7 +22,7 @@ function Card({ title, color = "blue", href = "/" }) {
   return (
     <Link href={href}>
       <div
-        className={`shadow-md rounded-md min-h-[200px] flex justify-center items-center text-xl cursor-pointer text-${color}-400`}
+        className={`shadow-md bg-white rounded-md min-h-[200px] flex justify-center items-center text-xl cursor-pointer text-${color}-400 dark:text-black`}
       >
         {title}
       </div>
