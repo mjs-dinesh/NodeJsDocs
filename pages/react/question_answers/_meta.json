@@ -1,0 +1,14 @@
+{
+  "html": "HTML",
+  "css": "CSS",
+  "java_script": "Java Script",
+  "react": "React",
+  "react_components": "React Components",
+  "hooks": "React Hooks",
+  "react_router_dom": "React Router DOM",
+  "redux": "React Redux",
+  "api_call": "API Call",
+  "rest_api": "REST API",
+  "testing": "Testing",
+  "others": "Others"
+}

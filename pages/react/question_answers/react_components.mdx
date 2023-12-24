@@ -1,0 +1,488 @@
+### React Components
+
+### Types of components.
+
+In React, components are the building blocks of a user interface, and they can be categorized into three main types:
+
+1. #### Functional Components:
+
+   - Functional components are also known as stateless or dumb components. They are simple, lightweight functions that take props as arguments and return React elements. Functional components are primarily used for rendering UI based on the provided props.
+
+   ```jsx
+   // Example of a functional component
+   const Greeting = (props) => {
+     return <h1>Hello, {props.name}!</h1>;
+   };
+   ```
+
+   - With the introduction of React Hooks, functional components can also manage state and have lifecycle-like features through hooks like `useState` and `useEffect`.
+
+   ```jsx
+   import React, { useState, useEffect } from "react";
+
+   const Counter = () => {
+     const [count, setCount] = useState(0);
+
+     useEffect(() => {
+       document.title = `Count: ${count}`;
+     }, [count]);
+
+     return (
+       <div>
+         <p>Count: {count}</p>
+         <button onClick={() => setCount(count + 1)}>Increment</button>
+       </div>
+     );
+   };
+   ```
+
+2. #### Class Components:
+
+   - Class components are also known as stateful or smart components. They are ES6 classes that extend from `React.Component`. Class components have their own state, which can be modified, triggering a re-render of the component. They also have access to lifecycle methods.
+
+   ```jsx
+   // Example of a class component
+   import React, { Component } from "react";
+
+   class Counter extends Component {
+     constructor(props) {
+       super(props);
+       this.state = {
+         count: 0,
+       };
+     }
+
+     render() {
+       return (
+         <div>
+           <p>Count: {this.state.count}</p>
+           <button
+             onClick={() => this.setState({ count: this.state.count + 1 })}
+           >
+             Increment
+           </button>
+         </div>
+       );
+     }
+   }
+   ```
+
+   - Class components were the traditional way of writing components in React. However, with the introduction of hooks in React 16.8, functional components with hooks are now the preferred choice for many developers.
+
+3. #### Pure Components:
+
+   - Pure components are a performance optimization in React. They are class components that extend `React.PureComponent` instead of `React.Component`. A pure component performs a shallow comparison of its props and state before deciding whether to re-render. If the props and state have not changed, the component won't re-render, potentially saving resources.
+
+   - While pure components can provide performance benefits by avoiding unnecessary renders, it's essential to be mindful of their use, especially when dealing with complex state or props structures.
+
+In modern React development, functional components with hooks are often preferred due to their simplicity, readability, and the ability to handle state and lifecycle features. However, class components and pure components still have their use cases, particularly in existing codebases or situations where specific lifecycle methods are required.
+
+`PureComponent` is a base class in React that is similar to `Component` but comes with a built-in implementation of `shouldComponentUpdate`. The main difference is that `PureComponent` performs a shallow comparison of the current and next state and props before deciding whether to re-render. If the shallow comparison indicates that the state or props have not changed, the component will not re-render.
+
+The primary use case for `PureComponent` is to optimize performance by preventing unnecessary renders when the component's state or props have not changed.
+
+##### Key Points:
+
+1. **Shallow Comparison:**
+
+   - `PureComponent` performs a shallow comparison of the current and next state and props using `shallowEqual`. If the shallow comparison indicates that the state or props have changed, the component will re-render; otherwise, it will not.
+
+2. **Automatic `shouldComponentUpdate`:**
+
+   - Unlike a regular `Component`, a `PureComponent` automatically implements `shouldComponentUpdate` with the shallow comparison logic. You don't need to manually define `shouldComponentUpdate` when using `PureComponent`.
+
+3. **Performance Optimization:**
+   - The use of `PureComponent` can be beneficial in scenarios where you want to optimize performance by avoiding unnecessary renders, especially in cases where a component's render function is computationally expensive.
+
+##### Example Usage:
+
+```javascript
+import React, { PureComponent } from "react";
+
+class MyPureComponent extends PureComponent {
+  render() {
+    console.log("Rendered MyPureComponent");
+    return (
+      <div>
+        <p>Prop: {this.props.myProp}</p>
+        <p>State: {this.state.myState}</p>
+      </div>
+    );
+  }
+}
+
+// Usage
+const App = () => {
+  const [count, setCount] = React.useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Increment Count</button>
+      <MyPureComponent myProp={count} />
+    </div>
+  );
+};
+```
+
+In this example, `MyPureComponent` extends `PureComponent`, and its `render` method logs a message to the console. The component receives a prop (`myProp`) from its parent (`App`). When the parent's state changes due to a button click, the `MyPureComponent` is re-rendered.
+
+##### When to Use `PureComponent`:
+
+1. **Pure Data Components:**
+
+   - Use `PureComponent` when your component is primarily a "pure" data component that relies on props and doesn't have complex internal state or side effects.
+
+2. **Performance Optimization:**
+   - Use `PureComponent` in scenarios where preventing unnecessary renders is crucial for performance optimization.
+
+##### Considerations:
+
+1. **Avoid Deep Structures:**
+
+   - The shallow comparison performed by `PureComponent` may not be suitable for deep data structures or complex objects. In such cases, consider implementing custom logic in `shouldComponentUpdate`.
+
+2. **Functional Components and Hooks:**
+   - With the introduction of React Hooks, functional components and the `React.memo` higher-order component provide similar performance optimizations for functional components.
+
+```javascript
+// Using React.memo for functional components
+const MyFunctionalComponent = React.memo(({ myProp }) => {
+  console.log("Rendered MyFunctionalComponent");
+  return (
+    <div>
+      <p>Prop: {myProp}</p>
+    </div>
+  );
+});
+```
+
+While `PureComponent` is a class-based approach, `React.memo` achieves a similar effect for functional components.
+
+In summary, `PureComponent` is a tool in the React developer's toolkit for optimizing performance in specific scenarios where automatic shallow comparisons of props and state can help prevent unnecessary renders. When used appropriately, it can be a valuable tool for performance-conscious development.
+
+### Stateful and Stateless components
+
+In React, components can be broadly categorized into two types: stateful components and stateless components. These categories refer to how components manage and use state, which is essential for understanding how React applications are structured.
+
+#### Stateless (Functional) Components:
+
+1. **Function Components:**
+
+   - Stateless components are also known as functional components. They are defined as JavaScript functions.
+
+2. **No Internal State:**
+
+   - Stateless components do not have an internal state. They rely solely on the props passed to them.
+
+3. **No `this` Keyword:**
+
+   - Since there is no internal state, there is no need for the `this` keyword within the component.
+
+4. **Useful for Simple Presentational Components:**
+
+   - Stateless components are ideal for simple presentational components that receive data as props and render it. They are primarily concerned with the presentation of data.
+
+5. **Easier to Test:**
+
+   - Stateless components are typically easier to test because they are pure functions that produce output based on input props.
+
+6. **Use Functional Syntax:**
+
+   - Example:
+
+     ```javascript
+     const MyComponent = (props) => {
+       return <div>{props.data}</div>;
+     };
+     ```
+
+#### Stateful (Class) Components:
+
+1. **Class Components:**
+
+   - Stateful components are also known as class components. They are defined as ES6 classes that extend `React.Component`.
+
+2. **Internal State:**
+
+   - Stateful components can have an internal state managed using `this.state`. State allows the component to manage and respond to changes over time.
+
+3. **Use of `this` Keyword:**
+
+   - Stateful components use the `this` keyword to access both props and state within the component.
+
+4. **Ideal for Complex Components:**
+
+   - Stateful components are ideal for more complex components that need to manage their state, handle user input, and interact with the lifecycle methods.
+
+5. **Can Implement Lifecycle Methods:**
+
+   - Stateful components can implement lifecycle methods, such as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`, allowing for more control over component behavior.
+
+6. **Example:**
+
+   ```javascript
+   import React, { Component } from "react";
+
+   class MyComponent extends Component {
+     constructor(props) {
+       super(props);
+       this.state = {
+         count: 0,
+       };
+     }
+
+     incrementCount = () => {
+       this.setState({ count: this.state.count + 1 });
+     };
+
+     render() {
+       return (
+         <div>
+           <p>Count: {this.state.count}</p>
+           <button onClick={this.incrementCount}>Increment</button>
+         </div>
+       );
+     }
+   }
+   ```
+
+#### Summary:
+
+- **Stateless (Functional) Components:**
+
+  - Functional components, defined as JavaScript functions.
+  - No internal state (`this.state` is not used).
+  - Ideal for simple presentational components.
+  - Easier to test and reason about.
+  - Use functional syntax.
+
+- **Stateful (Class) Components:**
+  - Class components, defined as ES6 classes that extend `React.Component`.
+  - Can have an internal state managed using `this.state`.
+  - Ideal for complex components that need to manage state, handle user input, and interact with lifecycle methods.
+  - Use the `this` keyword to access both props and state.
+  - Can implement lifecycle methods for more control over component behavior.
+
+In modern React development, functional components with hooks (such as `useState` and `useEffect`) have become increasingly popular, blurring the distinction between stateful and stateless components. Functional components with hooks offer a more concise syntax and provide a way to manage state and lifecycle in functional components.
+
+### Controlled Component
+
+In React, a controlled component is a component whose form elements (like input, textarea, and select) are controlled by the component's state. The term "controlled" refers to the fact that the component's state controls the value of the input elements, and any user input is handled through React state and onChange handlers.
+
+Here are the key characteristics of controlled components:
+
+1. **State Management:**
+
+   - The value of the input elements is stored in the component's state. This means that the component has a piece of state to represent the current value of the input.
+
+2. **onChange Handler:**
+
+   - User interactions, such as typing in an input field, trigger the `onChange` event. The `onChange` event is then handled by a function that updates the state with the new value.
+
+3. **Single Source of Truth:**
+
+   - The component's state is considered the "single source of truth" for the value of the input element. The input element reflects the state, and any changes to the input are captured and updated in the state.
+
+4. **Example of a Controlled Input:**
+
+   ```jsx
+   import React, { useState } from "react";
+
+   const ControlledInput = () => {
+     const [inputValue, setInputValue] = useState("");
+
+     const handleInputChange = (event) => {
+       setInputValue(event.target.value);
+     };
+
+     return (
+       <div>
+         <label>Enter Text:</label>
+         <input type="text" value={inputValue} onChange={handleInputChange} />
+         <p>Typed Value: {inputValue}</p>
+       </div>
+     );
+   };
+   ```
+
+   In this example, the `inputValue` is controlled by the state, and the `onChange` event is used to update the state with the new value of the input.
+
+Controlled components are beneficial in React for several reasons:
+
+- **Predictable Behavior:** Since the component's state is the source of truth, the behavior of the component is more predictable, making it easier to understand and debug.
+
+- **React State Management:** Controlled components fit well with React's declarative approach to state management, allowing React to efficiently update the DOM when the state changes.
+
+- **Validation and Manipulation:** You can easily validate, manipulate, or perform any custom logic on the input value before updating the state.
+
+While controlled components offer predictability and a clear data flow, they might result in more boilerplate code compared to uncontrolled components in certain situations. The choice between controlled and uncontrolled components depends on the specific requirements and preferences of the application.
+
+### Higher-Order Component (HOC)
+
+A Higher-Order Component (HOC) is a design pattern in React that involves a function that takes a component and returns a new component with enhanced functionality. HOCs are a way to reuse component logic and share it between different components. They are a powerful and flexible pattern for code reuse and abstraction in React applications.
+
+Here is a simple explanation and example of a Higher-Order Component:
+
+#### Example: Logger Higher-Order Component
+
+Suppose you want to log the props of a component every time it renders. Instead of adding logging code to each component, you can create a higher-order component to encapsulate this behavior.
+
+```jsx
+import React from "react";
+
+// Higher-Order Component function
+const withLogger = (WrappedComponent) => {
+  return class WithLogger extends React.Component {
+    componentDidMount() {
+      console.log(
+        `Component ${WrappedComponent.name} mounted with props:`,
+        this.props
+      );
+    }
+
+    componentDidUpdate(prevProps) {
+      console.log(
+        `Component ${WrappedComponent.name} updated. Previous props:`,
+        prevProps
+      );
+      console.log(`Current props:`, this.props);
+    }
+
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
+  };
+};
+
+// Component to be enhanced with the logger
+const MyComponent = (props) => {
+  // Component logic...
+  return <div>{props.message}</div>;
+};
+
+// Use the HOC to create an enhanced component
+const MyComponentWithLogger = withLogger(MyComponent);
+
+// Usage in the application
+const App = () => {
+  return <MyComponentWithLogger message="Hello, HOC!" />;
+};
+```
+
+In this example:
+
+- `withLogger` is a higher-order component that takes a component (`WrappedComponent`) as an argument and returns a new component (`WithLogger`) with additional logging functionality.
+
+- The `WithLogger` component logs information about component mounting and updating in its lifecycle methods (`componentDidMount` and `componentDidUpdate`).
+
+- The `MyComponentWithLogger` component is created by applying the `withLogger` HOC to the original `MyComponent`. This new component has the same logic as `MyComponent` but with added logging functionality.
+
+- Finally, in the application, `MyComponentWithLogger` is used instead of `MyComponent`. This allows logging of component lifecycle events without modifying the original component.
+
+Higher-Order Components provide a way to share and reuse logic across different components without repeating code. They are a flexible and powerful pattern in React, and many popular libraries and frameworks leverage HOCs to enhance and extend component behavior.
+
+#### Define Higher Order Component (HOC) in React.
+
+A Higher Order Component (HOC) in React is a pattern where a function takes a component and returns a new component with additional props or behavior. HOCs are a way to reuse component logic, share code, and enhance components in a modular and reusable manner. They are not components themselves but functions that accept a component and return a new one.
+
+The primary purpose of HOCs is to abstract and share common functionality among components without duplicating code. They are often used for tasks such as state management, authentication, or providing context to components.
+
+#### Basic Structure of a Higher Order Component:
+
+A basic HOC takes a component as an argument and returns a new enhanced component:
+
+```javascript
+const higherOrderComponent = (WrappedComponent) => {
+  // Additional logic or props can be added here
+  const EnhancedComponent = (props) => {
+    // Render the wrapped component with additional logic or props
+    return <WrappedComponent {...props} />;
+  };
+
+  return EnhancedComponent;
+};
+```
+
+#### Example: Logging HOC
+
+Here's a simple example of a logging HOC that logs the component's props:
+
+```javascript
+const withLogging = (WrappedComponent) => {
+  const EnhancedComponent = (props) => {
+    console.log("Component props:", props);
+    return <WrappedComponent {...props} />;
+  };
+
+  return EnhancedComponent;
+};
+
+// Usage
+const EnhancedComponentWithLogging = withLogging(MyComponent);
+```
+
+#### Usage of HOCs:
+
+1. **Wrap a Component:**
+
+   - To use an HOC, wrap a component with the HOC function. This creates a new component with additional behavior or props.
+
+   ```javascript
+   const EnhancedComponent = higherOrderComponent(MyComponent);
+   ```
+
+2. **Apply Multiple HOCs:**
+
+   - You can apply multiple HOCs to a component, stacking their functionality.
+
+   ```javascript
+   const EnhancedComponent = withLogging(withAuthentication(MyComponent));
+   ```
+
+3. **Pass Props:**
+
+   - The HOC can pass additional props to the wrapped component if needed.
+
+   ```javascript
+   const EnhancedComponent = withProps(MyComponent);
+   ```
+
+#### Common Use Cases for HOCs:
+
+1. **Reusing Component Logic:**
+
+   - Extract common logic from multiple components into an HOC to avoid code duplication.
+
+2. **Authentication and Authorization:**
+
+   - HOCs can handle authentication and authorization logic, restricting access to certain components based on user roles.
+
+3. **Logging and Analytics:**
+
+   - HOCs can log component lifecycle events or capture analytics data.
+
+4. **Context Injection:**
+   - Injecting context into components using HOCs.
+
+#### Caveats and Considerations:
+
+1. **Props Proxy:**
+
+   - HOCs often use a "props proxy" approach to pass additional props to the wrapped component. Be mindful of avoiding naming collisions.
+
+2. **Component Identity:**
+
+   - Wrapping a component with an HOC creates a new component identity. Be cautious with comparisons using `shouldComponentUpdate` or `React.memo`.
+
+3. **Avoid Mutating the Original Component:**
+
+   - HOCs should avoid mutating the original component. Instead, they should create a new component with the desired enhancements.
+
+4. **Composition over Inheritance:**
+   - HOCs promote the composition pattern, which is often considered more flexible than class inheritance.
+
+The use of HOCs is a powerful pattern in React, enabling code reuse and separation of concerns. However, with the introduction of React Hooks and other patterns, developers may also consider alternatives like render props or function components with hooks based on the specific use case.
