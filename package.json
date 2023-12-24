@@ -4,7 +4,7 @@
   "description": "Node Js Interview Documentations",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -r .next && next build",
     "start": "next start"
   },
   "author": "mjs-dinesh",
