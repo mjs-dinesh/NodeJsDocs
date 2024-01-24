@@ -3,17 +3,15 @@ import Link from "next/link";
 export function Home() {
   return (
     <div className="grid grid-cols-3 gap-5 mt-5 items-center justify-center">
-      <Card
-        title="Java Script"
-        color="red"
-        href="/java_script/question_answers/data_types"
-      />
-      <Card title="React" href="/react/question_answers/react" color="red" />
-      <Card title="Next" />
-      <Card title="Node" />
-      <Card title="MongoDB" />
-      <Card title="AWS" />
-      <Card title="Nest" />
+      <Card title="Java Script" color="red" href="/java_script" />
+      <Card title="React" href="/react" color="red" />
+      <Card title="Next" href="/next" />
+      <Card title="Node" href="/node" />
+      <Card title="MongoDB" href="/mongodb" />
+      <Card title="AWS" href="/aws" />
+      <Card title="Nest" href="/nest" />
+      <Card title="DSA" href="/dsa" />
+      <Card title="React Native" href="/native" />
     </div>
   );
 }

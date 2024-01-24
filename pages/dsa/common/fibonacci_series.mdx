@@ -1,0 +1,44 @@
+Certainly! The Fibonacci series is a sequence of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. Let's write a JavaScript function to generate the nth Fibonacci number.
+
+### Brute Force Solution:
+
+```javascript
+// Brute Force Solution
+function fibonacciBruteForce(n) {
+  if (n <= 1) {
+    return n;
+  } else {
+    return fibonacciBruteForce(n - 1) + fibonacciBruteForce(n - 2);
+  }
+}
+
+// Example usage
+console.log(fibonacciBruteForce(5)); // Output: 5
+```
+
+This solution uses recursion to calculate Fibonacci numbers. However, it's not optimal because it recalculates the same Fibonacci numbers multiple times, leading to exponential time complexity.
+
+### Optimal Solution (Dynamic Programming - Memoization):
+
+```javascript
+// Optimal Solution using Memoization
+function fibonacciOptimal(n, memo = {}) {
+  if (n <= 1) {
+    return n;
+  }
+
+  if (memo[n]) {
+    return memo[n];
+  } else {
+    memo[n] = fibonacciOptimal(n - 1, memo) + fibonacciOptimal(n - 2, memo);
+    return memo[n];
+  }
+}
+
+// Example usage
+console.log(fibonacciOptimal(5)); // Output: 5
+```
+
+This solution uses memoization to store the results of previously calculated Fibonacci numbers, preventing redundant calculations. It has a time complexity of O(n) because each Fibonacci number is calculated only once.
+
+Feel free to ask if you have any questions or if you'd like explanations for any part of the code!

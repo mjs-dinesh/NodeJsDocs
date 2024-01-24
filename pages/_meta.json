@@ -3,8 +3,16 @@
     "title": "Welcome",
     "type": "page"
   },
+  "java_script": {
+    "title": "Java Script",
+    "type": "page"
+  },
   "react": {
     "title": "React",
+    "type": "page"
+  },
+  "next": {
+    "title": "Next",
     "type": "page"
   },
   "node": {
@@ -15,8 +23,20 @@
     "title": "Nest",
     "type": "page"
   },
-  "java_script": {
-    "title": "Java Script",
+  "dsa": {
+    "title": "DSA",
+    "type": "page"
+  },
+  "native": {
+    "title": "React Native",
+    "type": "page"
+  },
+  "aws": {
+    "title": "AWS",
+    "type": "page"
+  },
+  "mongodb": {
+    "title": "Mongo DB",
     "type": "page"
   }
 }
