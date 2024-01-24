@@ -1,0 +1,86 @@
+[Mapbox](https://www.mapbox.com/) is a mapping platform that provides developers with tools and APIs for building custom, interactive maps in their applications. It offers a variety of mapping services, including static maps, dynamic maps, geocoding, navigation, and more. Mapbox is known for its flexibility, customizability, and support for vector maps.
+
+In a React Native application, you can integrate Mapbox using the Mapbox SDK for React Native, which allows you to embed interactive maps into your mobile app. Here are the general steps to use Mapbox in a React Native application:
+
+### 1. **Create a Mapbox Account:**
+
+- To use Mapbox, you need to create an account and obtain an API key. Visit the Mapbox website (https://www.mapbox.com/) and sign up for an account. Once registered, you can create a new Mapbox Access Token in your account dashboard.
+
+### 2. **Install the Mapbox SDK for React Native:**
+
+- You can install the Mapbox SDK for React Native using npm or yarn. Open a terminal and navigate to your React Native project directory, then run one of the following commands:
+
+  Using npm:
+
+  ```bash
+  npm install @react-native-mapbox-gl/maps --save
+  ```
+
+  Using yarn:
+
+  ```bash
+  yarn add @react-native-mapbox-gl/maps
+  ```
+
+### 3. **Link the Module:**
+
+- With React Native versions 0.59 and below, you need to link the Mapbox module to your project. For React Native versions 0.60 and above, linking is done automatically.
+
+  To manually link the module for older versions:
+
+  ```bash
+  react-native link @react-native-mapbox-gl/maps
+  ```
+
+### 4. **Configure Mapbox Access Token:**
+
+- Open your `android/app/src/main/AndroidManifest.xml` file and add your Mapbox Access Token inside the `<application>` tag:
+
+  ```xml
+  <application>
+    <!-- ... other configurations ... -->
+    <meta-data
+      android:name="MAPBOX_ACCESS_TOKEN"
+      android:value="your-mapbox-access-token" />
+  </application>
+  ```
+
+### 5. **Use Mapbox Components in Your React Native App:**
+
+- Import the Mapbox components in your React Native code, and use them to render maps. Here's a basic example:
+
+  ```jsx
+  import React from "react";
+  import MapboxGL from "@react-native-mapbox-gl/maps";
+
+  MapboxGL.setAccessToken("your-mapbox-access-token");
+
+  const App = () => {
+    return (
+      <MapboxGL.MapView
+        style={{ flex: 1 }}
+        zoomLevel={12}
+        centerCoordinate={[longitude, latitude]}
+      >
+        <MapboxGL.Camera
+          zoomLevel={12}
+          centerCoordinate={[longitude, latitude]}
+        />
+        <MapboxGL.PointAnnotation
+          id="pointAnnotation"
+          coordinate={[longitude, latitude]}
+        />
+      </MapboxGL.MapView>
+    );
+  };
+
+  export default App;
+  ```
+
+- Customize the map by exploring various components and options provided by the Mapbox SDK for React Native. You can add markers, annotations, overlays, and more.
+
+### 6. **Explore Mapbox Documentation:**
+
+- Refer to the Mapbox documentation for React Native to learn about advanced features, customization options, and best practices. The official documentation provides detailed information on using Mapbox in your React Native projects.
+
+Keep in mind that Mapbox offers extensive customization options, and you can integrate various Mapbox services based on your application's requirements, such as adding directions, search functionality, and real-time data layers.
